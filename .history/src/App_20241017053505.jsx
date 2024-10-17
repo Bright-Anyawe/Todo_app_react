@@ -1,0 +1,16 @@
+import { useState } from 'react'
+import 
+import SideBar from './component/SideBar'
+import Display from './component/Display'
+import './App.css'
+
+function App() {
+
+  return (
+    <>
+     
+    </>
+  )
+}
+
+export default App
