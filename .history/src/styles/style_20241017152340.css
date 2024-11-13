@@ -1,0 +1,147 @@
+body {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+:root {
+  --hover-color: #fda4af;
+  --background-color: #6f9e9e;
+  --svg-dominion-color: white;
+}
+
+main {
+  display: grid;
+  grid-template-columns: 300px 800px;
+  grid-template-rows: 100px 600px;
+}
+
+header {
+  grid-area: 1 / 1 / 2 / 4;
+  background-color: rgb(20, 33, 61);
+}
+
+.subHeadContainer {
+  display: flex;
+}
+
+.subHeadContainer svg {
+  fill: var(--svg-dominion-color);
+  width: 39px;
+}
+
+#displayContentContainer {
+  display: grid;
+  grid-area: 2 / 2 / 4 / 4;
+      color: black;
+
+  background-color: white;
+}
+
+.displayContentSubContainer {
+    padding-top: 40px;
+    padding-left: 60px;
+}
+
+.taskBtnContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.taskTitle {
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.taskBtn {
+    background-color: white;
+        color: black;
+        border: none;
+        padding: 0;
+        font-size: 1.2rem;
+        /* align-items: center; */
+
+}
+
+#sideBar {
+  grid-area: 2 / 1 / 4 / 2;
+  background-color: rgb(0, 0, 0);
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+  padding-top: 25px;
+  transition: width 0.3s ease;
+  position: relative;
+}
+
+#sideBar svg {
+  fill: white;
+  width: 35px;
+}
+
+.projectSubContainer svg {
+  fill: white;
+}
+
+#menu {
+  display: flex;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 22px;
+  padding-left: 30px;
+}
+
+#menu li {
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+  font-size: 1.3rem;
+
+  cursor: pointer;
+  gap: 15px;
+  width: clamp(170px, 20vw, 230px);
+
+  padding-left: 10px;
+  height: clamp(32px, 6vw, 40px);
+}
+
+#menu li:hover {
+  /* background-color: orange; */
+  border: 1px solid orange;
+  border-radius: 8px;
+}
+
+svg {
+  width: 30px;
+}
+
+.formContainer {
+      grid-area: 2 / 2 / 4 / 4;
+z-index: 999;
+}
+
+form {
+    border: 1px solid black;
+    width: 30vw;
+}
+
+.svgControl button {
+    background-color: transparent;
+}
+
+.svgControl svg {
+    width: 30px;
+}
