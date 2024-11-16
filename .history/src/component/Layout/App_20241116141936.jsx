@@ -34,10 +34,11 @@ function App() {
 
   
   const updateCompletedCount = () => {
-    if (completedToDos && Array.isArray(completedToDos)) {
+    if (Array.isArray(completedToDos)) {
+      localStorage.setItem("completedToDos", JSON.stringify(completedToDos));
       setCompletedCount(completedToDos.length);
     } else {
-      setCompletedCount(0); 
+      return;
     }
   };
 

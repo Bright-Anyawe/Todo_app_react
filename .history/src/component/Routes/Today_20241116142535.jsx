@@ -17,8 +17,6 @@ export function Today() {
     completedToDos,
     setCompletedToDos,
     setTodayCount,
-    setCompletedCount,
-
   } = useContext(GeneralContext);
 
   const { projects = [], setProjects } = useContext(ProjectContext);
@@ -37,10 +35,7 @@ export function Today() {
       const todayToDos =
         storedProjects.find((project) => project?.name === "Today")?.todos ||
         [];
-        const todayCount = Array.isArray(todayToDos)
-          ? todayToDos.length
-          : 0;
-      setTodayCount(todayCount);
+      setTodayCount(todayToDos.length); // Initialize inbox count
     }
   }, []);
 

@@ -37,10 +37,9 @@ export function Today() {
       const todayToDos =
         storedProjects.find((project) => project?.name === "Today")?.todos ||
         [];
-        const todayCount = Array.isArray(todayToDos)
-          ? todayToDos.length
-          : 0;
-      setTodayCount(todayCount);
+    setCompletedCount(completedCount);
+
+      setTodayCount(todayToDos.length); // Initialize inbox count
     }
   }, []);
 

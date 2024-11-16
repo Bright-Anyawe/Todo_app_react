@@ -37,7 +37,7 @@ function App() {
     if (completedToDos && Array.isArray(completedToDos)) {
       setCompletedCount(completedToDos.length);
     } else {
-      setCompletedCount(0); 
+      setCompletedCount(0); // or handle the null case as needed
     }
   };
 

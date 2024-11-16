@@ -31,22 +31,15 @@ function App() {
   const [selectedProjectIndex, setSelectedProjectIndex] = useState(null);
 
   const [completedToDos, setCompletedToDos] = useState([]);
-
-  
-  const updateCompletedCount = () => {
-    if (completedToDos && Array.isArray(completedToDos)) {
-      setCompletedCount(completedToDos.length);
-    } else {
-      setCompletedCount(0); 
-    }
-  };
+  .z
 
   useEffect(() => {
-    if (completedToDos === null) {
-      return <div>No completed tasks available.</div>;
-    }
-    updateCompletedCount();
-
+    
+    const updateCompletedCount = () => {
+      
+      
+    };
+    
     // setCompletedCount(completedToDos.length);
   }, [completedToDos]);
 
@@ -99,11 +92,7 @@ function App() {
               setSelectedProjectIndex,
             }}
           >
-            <Header
-              toggleSidebar={toggleSidebar}
-              isCollapsed={isCollapsed}
-              arrowRef={arrowRef}
-            />
+            <Header toggleSidebar={toggleSidebar} isCollapsed={isCollapsed} arrowRef={arrowRef} />
             <SideBar />
             <Display />
           </ProjectContext.Provider>

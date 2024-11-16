@@ -5,20 +5,17 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import InfoIcon from "@mui/icons-material/Info";
-import { useState } from "react";
-import { FormButton } from "../Button";
+import { useState, useEffect } from "react";
 import { TodoDetails } from "./TodoDetails";
-import { useEffect } from "react";
+import { FormButton } from "../Button";
 
-export function Today() {
+export function Tomorrow() {
   const {
     setOpen,
     setSelectedTodo,
     completedToDos,
     setCompletedToDos,
-    setTodayCount,
-    setCompletedCount,
-
+    setTomorrowCount,
   } = useContext(GeneralContext);
 
   const { projects = [], setProjects } = useContext(ProjectContext);
@@ -27,25 +24,22 @@ export function Today() {
   const [todoDetails, setTodoDetails] = useState(null);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
-  const todayToDos =
-    projects.find((project) => project?.name === "Today")?.todos || [];
+  const tomorrowToDos =
+    projects.find((project) => project?.name === "Tomorrow")?.todos || [];
+  console.dir(tomorrowToDos, { depth: null });
 
   useEffect(() => {
     const storedProjects = JSON.parse(localStorage.getItem("projects"));
     if (storedProjects && storedProjects.length) {
       setProjects(storedProjects);
-      const todayToDos =
-        storedProjects.find((project) => project?.name === "Today")?.todos ||
+      const tomorrowToDos =
+        storedProjects.find((project) => project?.name === "Tomorrow")?.todos ||
         [];
-        const todayCount = Array.isArray(todayToDos)
-          ? todayToDos.length
-          : 0;
-      setTodayCount(todayCount);
+      setTomorrowCount(tomorrowToDos.length);
     }
   }, []);
 
   const handleOptionsClick = (index) => {
-    // Toggle the options menu for a specific to-do item
     setShowOptions(showOptions === index ? null : index);
   };
 
@@ -55,17 +49,20 @@ export function Today() {
   };
 
   const handleDelete = (index) => {
-    const updatedToDos = todayToDos.filter((_, i) => i !== index);
+    const updatedToDos = tomorrowToDos.filter((_, i) => i !== index);
 
     setProjects((prevProjects) => {
       const updatedProjects = prevProjects.map((project) => {
-        if (project.name === "Today") {
+        if (project.name === "Tomorrow") {
           return { ...project, todos: updatedToDos };
         }
         return project;
       });
       localStorage.setItem("projects", JSON.stringify(updatedProjects));
-      setTodayCount(updatedToDos.length);
+      const tomorrowCount = Array.isArray(tomorrowToDos)
+          ? tomorrowToDos.length
+          : 0;
+      setTomorrowCount(updatedToDos.length);
       return updatedProjects;
     });
   };
@@ -79,9 +76,8 @@ export function Today() {
     setDetailsOpen(false);
     setTodoDetails(null);
   };
-
   const handleCheckBoxChange = (index, todo) => {
-    const updatedTodos = todayToDos.map((todo, i) => {
+    const updatedTodos = tomorrowToDos.map((todo, i) => {
       if (i === index) {
         return { ...todo, completed: !todo.completed };
       }
@@ -90,7 +86,7 @@ export function Today() {
 
     setProjects((prevProjects) => {
       const updatedProjects = prevProjects.map((project) => {
-        if (project.name === "Today") {
+        if (project.name === "Tomorrow") {
           return { ...project, todos: updatedTodos };
         }
         return project;
@@ -100,10 +96,6 @@ export function Today() {
     });
     setCompletedToDos((prevCompletedToDos) => [...prevCompletedToDos, todo]);
             
-    const completedCount = Array.isArray(completedToDos)
-      ? completedToDos.length
-      : 0;
-    setCompletedCount(completedCount);
     setSnackbarOpen(true);
   };
 
@@ -114,11 +106,11 @@ export function Today() {
   return (
     <div className="inboxTaskContainer">
       <div className="taskTitle">
-        <h2>Today</h2>
+        <h2>Tomorrow</h2>
       </div>
 
       <div className="taskContainer">
-        {todayToDos.map((todo, index) => {
+        {tomorrowToDos.map((todo, index) => {
           const isCompleted = todo.completed;
 
           return (
@@ -177,8 +169,8 @@ export function Today() {
             </div>
           );
         })}
-        <FormButton />
       </div>
+      <FormButton />
 
       {
         <TodoDetails

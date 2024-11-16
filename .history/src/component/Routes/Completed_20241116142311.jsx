@@ -5,21 +5,12 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import InfoIcon from "@mui/icons-material/Info";
-import { useState } from "react";
-import { FormButton } from "../Button";
+import { useState, useEffect } from "react";
 import { TodoDetails } from "./TodoDetails";
-import { useEffect } from "react";
 
-export function Today() {
-  const {
-    setOpen,
-    setSelectedTodo,
-    completedToDos,
-    setCompletedToDos,
-    setTodayCount,
-    setCompletedCount,
-
-  } = useContext(GeneralContext);
+export function Completed() {
+  const { setCompletedCount, setCompletedToDos } =
+    useContext(GeneralContext);
 
   const { projects = [], setProjects } = useContext(ProjectContext);
   const [showOptions, setShowOptions] = useState(null);
@@ -27,84 +18,47 @@ export function Today() {
   const [todoDetails, setTodoDetails] = useState(null);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
-  const todayToDos =
-    projects.find((project) => project?.name === "Today")?.todos || [];
 
-  useEffect(() => {
-    const storedProjects = JSON.parse(localStorage.getItem("projects"));
-    if (storedProjects && storedProjects.length) {
-      setProjects(storedProjects);
-      const todayToDos =
-        storedProjects.find((project) => project?.name === "Today")?.todos ||
-        [];
-        const todayCount = Array.isArray(todayToDos)
-          ? todayToDos.length
-          : 0;
-      setTodayCount(todayCount);
-    }
-  }, []);
+  
+  const completedToDos = JSON.parse(localStorage.getItem("completedToDos"));
 
-  const handleOptionsClick = (index) => {
-    // Toggle the options menu for a specific to-do item
-    setShowOptions(showOptions === index ? null : index);
-  };
+const completedCount = Array.isArray(completedToDos)
+  ? completedToDos.length
+  : 0;
+  setCompletedCount(completedToDos.length);
 
-  const handleEditClick = (todo) => {
-    setSelectedTodo(todo);
-    setOpen(true);
-  };
+//   useEffect(() => {
+//     const completedToDos = JSON.parse(localStorage.getItem("completedToDos"));
+//     setCompletedCount(completedToDos.length);
+// //     setCompletedToDos(completedToDos);
+//   }, [completedToDos]);
 
-  const handleDelete = (index) => {
-    const updatedToDos = todayToDos.filter((_, i) => i !== index);
-
-    setProjects((prevProjects) => {
-      const updatedProjects = prevProjects.map((project) => {
-        if (project.name === "Today") {
-          return { ...project, todos: updatedToDos };
-        }
-        return project;
-      });
-      localStorage.setItem("projects", JSON.stringify(updatedProjects));
-      setTodayCount(updatedToDos.length);
-      return updatedProjects;
-    });
-  };
+   const handleOptionsClick = (index) => {
+     setShowOptions(showOptions === index ? null : index);
+   };
 
   const handleToDoDetails = (todo) => {
     setTodoDetails(todo);
     setDetailsOpen(true);
   };
 
-  const handleCloseDetails = () => {
-    setDetailsOpen(false);
-    setTodoDetails(null);
-  };
 
-  const handleCheckBoxChange = (index, todo) => {
-    const updatedTodos = todayToDos.map((todo, i) => {
-      if (i === index) {
-        return { ...todo, completed: !todo.completed };
-      }
-      return todo;
-    });
-
+  const handleDelete = (index) => {
+    const updatedTodos = completedToDos.filter((_, i) => i !== index);
     setProjects((prevProjects) => {
-      const updatedProjects = prevProjects.map((project) => {
-        if (project.name === "Today") {
+      return prevProjects.map((project) => {
+        if (project.name === "Completed") {
           return { ...project, todos: updatedTodos };
         }
         return project;
       });
-      localStorage.setItem("projects", JSON.stringify(updatedProjects));
-      return updatedProjects;
     });
-    setCompletedToDos((prevCompletedToDos) => [...prevCompletedToDos, todo]);
-            
-    const completedCount = Array.isArray(completedToDos)
-      ? completedToDos.length
-      : 0;
-    setCompletedCount(completedCount);
-    setSnackbarOpen(true);
+  };
+
+
+  const handleCloseDetails = () => {
+    setDetailsOpen(false);
+    setTodoDetails(null);
   };
 
   const handleCloseSnackbar = () => {
@@ -114,18 +68,18 @@ export function Today() {
   return (
     <div className="inboxTaskContainer">
       <div className="taskTitle">
-        <h2>Today</h2>
+        <h2>Completed Todos</h2>
       </div>
 
       <div className="taskContainer">
-        {todayToDos.map((todo, index) => {
-          const isCompleted = todo.completed;
+        {completedToDos.map((todo, index) => {
+          const isCompleted = completedToDos.includes(todo)
 
           return (
             <div key={index} className="taskItem">
               <div className="taskContent">
                 <Checkbox
-                  onClick={() => handleCheckBoxChange(index, todo)}
+               //    onClick={() => handleCheckBoxChange(index, todo)}
                   checked={isCompleted}
                   disabled={isCompleted}
                   style={{ float: "left" }}
@@ -162,9 +116,6 @@ export function Today() {
 
                 {showOptions === index && (
                   <div className="taskOptions">
-                    <IconButton onClick={() => handleEditClick(todo)}>
-                      <EditIcon /> Edit
-                    </IconButton>
                     <IconButton onClick={() => handleDelete(index)}>
                       <DeleteIcon /> Delete
                     </IconButton>
@@ -177,7 +128,6 @@ export function Today() {
             </div>
           );
         })}
-        <FormButton />
       </div>
 
       {

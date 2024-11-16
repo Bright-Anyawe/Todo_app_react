@@ -32,22 +32,18 @@ function App() {
 
   const [completedToDos, setCompletedToDos] = useState([]);
 
-  
+  useEffect(() => {
+    localStorage.setItem("completedToDos", JSON.stringify(completedToDos));
+
   const updateCompletedCount = () => {
-    if (completedToDos && Array.isArray(completedToDos)) {
+    if (Array.isArray(completedToDos)) {
       setCompletedCount(completedToDos.length);
     } else {
-      setCompletedCount(0); 
+      return
     }
   };
 
-  useEffect(() => {
-    if (completedToDos === null) {
-      return <div>No completed tasks available.</div>;
-    }
-    updateCompletedCount();
-
-    // setCompletedCount(completedToDos.length);
+    setCompletedCount(completedToDos.length);
   }, [completedToDos]);
 
   const [isCollapsed, setIsCollapsed] = useState(true);
@@ -99,11 +95,7 @@ function App() {
               setSelectedProjectIndex,
             }}
           >
-            <Header
-              toggleSidebar={toggleSidebar}
-              isCollapsed={isCollapsed}
-              arrowRef={arrowRef}
-            />
+            <Header toggleSidebar={toggleSidebar} isCollapsed={isCollapsed} arrowRef={arrowRef} />
             <SideBar />
             <Display />
           </ProjectContext.Provider>

@@ -31,20 +31,16 @@ function App() {
   const [selectedProjectIndex, setSelectedProjectIndex] = useState(null);
 
   const [completedToDos, setCompletedToDos] = useState([]);
-
-  
   const updateCompletedCount = () => {
-    if (completedToDos && Array.isArray(completedToDos)) {
+    if (Array.isArray(completedToDos)) {
+      localStorage.setItem("completedToDos", JSON.stringify(completedToDos));
       setCompletedCount(completedToDos.length);
     } else {
-      setCompletedCount(0); 
+      return;
     }
   };
 
   useEffect(() => {
-    if (completedToDos === null) {
-      return <div>No completed tasks available.</div>;
-    }
     updateCompletedCount();
 
     // setCompletedCount(completedToDos.length);
