@@ -118,66 +118,65 @@ export function Today() {
       </div>
 
       <div className="taskContainer">
-        {Array.isArray(todayToDos) &&
-          todayToDos.map((todo, index) => {
-            const isCompleted = todo.completed;
+        {  todayToDos.map((todo, index) => {
+          const isCompleted = todo.completed;
 
-            return (
-              <div key={index} className="taskItem">
-                <div className="taskContent">
-                  <Checkbox
-                    onClick={() => handleCheckBoxChange(index, todo)}
-                    checked={isCompleted}
-                    disabled={isCompleted}
-                    style={{ float: "left" }}
-                  />
+          return (
+            <div key={index} className="taskItem">
+              <div className="taskContent">
+                <Checkbox
+                  onClick={() => handleCheckBoxChange(index, todo)}
+                  checked={isCompleted}
+                  disabled={isCompleted}
+                  style={{ float: "left" }}
+                />
 
-                  <span
-                    style={{
-                      textDecoration: isCompleted ? "line-through" : "none",
-                      color: isCompleted ? "grey" : "black",
-                    }}
-                  >
-                    {todo.taskTitle}
+                <span
+                  style={{
+                    textDecoration: isCompleted ? "line-through" : "none",
+                    color: isCompleted ? "grey" : "black",
+                  }}
+                >
+                  {todo.taskTitle}
+                </span>
+                <span> - {todo.priority}</span>
+                {isCompleted && (
+                  <span style={{ color: "green", marginLeft: "10px" }}>
+                    Task completed!
                   </span>
-                  <span> - {todo.priority}</span>
-                  {isCompleted && (
-                    <span style={{ color: "green", marginLeft: "10px" }}>
-                      Task completed!
-                    </span>
-                  )}
+                )}
 
-                  <IconButton
-                    onClick={() => handleOptionsClick(index)}
-                    style={{ marginLeft: "auto" }}
-                  >
-                    <MoreVertIcon />
-                  </IconButton>
+                <IconButton
+                  onClick={() => handleOptionsClick(index)}
+                  style={{ marginLeft: "auto" }}
+                >
+                  <MoreVertIcon />
+                </IconButton>
 
-                  <Snackbar
-                    open={snackbarOpen}
-                    onClose={handleCloseSnackbar}
-                    message="Task marked as completed!"
-                    autoHideDuration={3000}
-                  />
+                <Snackbar
+                  open={snackbarOpen}
+                  onClose={handleCloseSnackbar}
+                  message="Task marked as completed!"
+                  autoHideDuration={3000}
+                />
 
-                  {showOptions === index && (
-                    <div className="taskOptions">
-                      <IconButton onClick={() => handleEditClick(todo)}>
-                        <EditIcon /> Edit
-                      </IconButton>
-                      <IconButton onClick={() => handleDelete(index)}>
-                        <DeleteIcon /> Delete
-                      </IconButton>
-                      <IconButton onClick={() => handleToDoDetails(todo)}>
-                        <InfoIcon /> Details
-                      </IconButton>
-                    </div>
-                  )}
-                </div>
+                {showOptions === index && (
+                  <div className="taskOptions">
+                    <IconButton onClick={() => handleEditClick(todo)}>
+                      <EditIcon /> Edit
+                    </IconButton>
+                    <IconButton onClick={() => handleDelete(index)}>
+                      <DeleteIcon /> Delete
+                    </IconButton>
+                    <IconButton onClick={() => handleToDoDetails(todo)}>
+                      <InfoIcon /> Details
+                    </IconButton>
+                  </div>
+                )}
               </div>
-            );
-          })}
+            </div>
+          );
+        })}
         <FormButton />
       </div>
 

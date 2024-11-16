@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import { FormButton } from "../Button";
 
+
 export default function Project() {
   const navigate = useNavigate();
 
@@ -91,41 +92,41 @@ export default function Project() {
       </div>
 
       <div className="taskContainer">
-        {Array.isArray(projectToDos) &&
-          projectToDos.map((todo, index) => (
-            <div key={index} className="taskItem">
-              <div className="taskContent">
-                <Checkbox
-                  onClick={() => handleCheckBoxChange()}
-                  style={{ float: "left" }}
-                />
-                <div className="todoTextContent">
-                  <p>{todo.taskTitle}</p>
-                  <p> - {todo.priority}</p>
-                </div>{" "}
-                {/* {isCompleted && <span style={{ color: 'green', marginLeft: '10px' }}>Task completed!</span>} */}
-                <IconButton
-                  onClick={() => handleOptionsClick(index)}
-                  style={{ marginLeft: "auto" }}
-                >
-                  <MoreVertIcon />
-                </IconButton>
-                {showOptions === index && (
-                  <div className="taskOptions">
-                    <IconButton onClick={() => handleEditClick(todo)}>
-                      <EditIcon /> Edit
-                    </IconButton>
-                    <IconButton onClick={() => handleDelete(index)}>
-                      <DeleteIcon /> Delete
-                    </IconButton>
-                    <IconButton onClick={() => handleToDoDetails(todo)}>
-                      <InfoIcon /> Details
-                    </IconButton>
-                  </div>
-                )}
-              </div>
+        {Array.isArray(projectToDos)
+        projectToDos.map((todo, index) => (
+          <div key={index} className="taskItem">
+            <div className="taskContent">
+              <Checkbox
+                onClick={() => handleCheckBoxChange()}
+                style={{ float: "left" }}
+              />
+              <div className="todoTextContent">
+                <p>{todo.taskTitle}</p>
+                <p> - {todo.priority}</p>
+              </div>{" "}
+              {/* {isCompleted && <span style={{ color: 'green', marginLeft: '10px' }}>Task completed!</span>} */}
+              <IconButton
+                onClick={() => handleOptionsClick(index)}
+                style={{ marginLeft: "auto" }}
+              >
+                <MoreVertIcon />
+              </IconButton>
+              {showOptions === index && (
+                <div className="taskOptions">
+                  <IconButton onClick={() => handleEditClick(todo)}>
+                    <EditIcon /> Edit
+                  </IconButton>
+                  <IconButton onClick={() => handleDelete(index)}>
+                    <DeleteIcon /> Delete
+                  </IconButton>
+                  <IconButton onClick={() => handleToDoDetails(todo)}>
+                    <InfoIcon /> Details
+                  </IconButton>
+                </div>
+              )}
             </div>
-          ))}
+          </div>
+        ))}
       </div>
       <FormButton />
       {

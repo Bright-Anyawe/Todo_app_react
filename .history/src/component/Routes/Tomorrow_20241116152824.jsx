@@ -35,9 +35,7 @@ export function Tomorrow() {
       const tomorrowToDos =
         storedProjects.find((project) => project?.name === "Tomorrow")?.todos ||
         [];
-      const tomorrowCount = Array.isArray(tomorrowToDos)
-        ? tomorrowToDos.length
-        : 0;
+        const tomorrowCount = Array.isArray(tomorrowToDos) ? tomorrowToDos.length : 0;
       setTomorrowCount(tomorrowCount.length);
     }
   }, []);
@@ -95,7 +93,7 @@ export function Tomorrow() {
       return updatedProjects;
     });
     setCompletedToDos((prevCompletedToDos) => [...prevCompletedToDos, todo]);
-
+            
     setSnackbarOpen(true);
   };
 
@@ -110,66 +108,65 @@ export function Tomorrow() {
       </div>
 
       <div className="taskContainer">
-        {Array.isArray(tomorrowToDos) &&
-          tomorrowToDos.map((todo, index) => {
-            const isCompleted = todo.completed;
+        { Array.isArray(thisWeekToDos)  tomorrowToDos.map((todo, index) => {
+          const isCompleted = todo.completed;
 
-            return (
-              <div key={index} className="taskItem">
-                <div className="taskContent">
-                  <Checkbox
-                    onClick={() => handleCheckBoxChange(index, todo)}
-                    checked={isCompleted}
-                    disabled={isCompleted}
-                    style={{ float: "left" }}
-                  />
+          return (
+            <div key={index} className="taskItem">
+              <div className="taskContent">
+                <Checkbox
+                  onClick={() => handleCheckBoxChange(index, todo)}
+                  checked={isCompleted}
+                  disabled={isCompleted}
+                  style={{ float: "left" }}
+                />
 
-                  <span
-                    style={{
-                      textDecoration: isCompleted ? "line-through" : "none",
-                      color: isCompleted ? "grey" : "black",
-                    }}
-                  >
-                    {todo.taskTitle}
+                <span
+                  style={{
+                    textDecoration: isCompleted ? "line-through" : "none",
+                    color: isCompleted ? "grey" : "black",
+                  }}
+                >
+                  {todo.taskTitle}
+                </span>
+                <span> - {todo.priority}</span>
+                {isCompleted && (
+                  <span style={{ color: "green", marginLeft: "10px" }}>
+                    Task completed!
                   </span>
-                  <span> - {todo.priority}</span>
-                  {isCompleted && (
-                    <span style={{ color: "green", marginLeft: "10px" }}>
-                      Task completed!
-                    </span>
-                  )}
+                )}
 
-                  <IconButton
-                    onClick={() => handleOptionsClick(index)}
-                    style={{ marginLeft: "auto" }}
-                  >
-                    <MoreVertIcon />
-                  </IconButton>
+                <IconButton
+                  onClick={() => handleOptionsClick(index)}
+                  style={{ marginLeft: "auto" }}
+                >
+                  <MoreVertIcon />
+                </IconButton>
 
-                  <Snackbar
-                    open={snackbarOpen}
-                    onClose={handleCloseSnackbar}
-                    message="Task marked as completed!"
-                    autoHideDuration={3000}
-                  />
+                <Snackbar
+                  open={snackbarOpen}
+                  onClose={handleCloseSnackbar}
+                  message="Task marked as completed!"
+                  autoHideDuration={3000}
+                />
 
-                  {showOptions === index && (
-                    <div className="taskOptions">
-                      <IconButton onClick={() => handleEditClick(todo)}>
-                        <EditIcon /> Edit
-                      </IconButton>
-                      <IconButton onClick={() => handleDelete(index)}>
-                        <DeleteIcon /> Delete
-                      </IconButton>
-                      <IconButton onClick={() => handleToDoDetails(todo)}>
-                        <InfoIcon /> Details
-                      </IconButton>
-                    </div>
-                  )}
-                </div>
+                {showOptions === index && (
+                  <div className="taskOptions">
+                    <IconButton onClick={() => handleEditClick(todo)}>
+                      <EditIcon /> Edit
+                    </IconButton>
+                    <IconButton onClick={() => handleDelete(index)}>
+                      <DeleteIcon /> Delete
+                    </IconButton>
+                    <IconButton onClick={() => handleToDoDetails(todo)}>
+                      <InfoIcon /> Details
+                    </IconButton>
+                  </div>
+                )}
               </div>
-            );
-          })}
+            </div>
+          );
+        })}
       </div>
       <FormButton />
 
