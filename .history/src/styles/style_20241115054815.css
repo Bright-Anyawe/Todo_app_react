@@ -1,0 +1,15 @@
+@media (max-width: 500px) {
+
+#root main {
+  display: flex;
+  flex-direction: column;
+}
+
+
+aside #sideBar {
+  
+}
+
+
+
+}

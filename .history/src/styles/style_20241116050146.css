@@ -1,0 +1,89 @@
+@media (max-width: 500px) {
+
+#root main {
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+  display: block;
+      
+             background-color: white;
+    }
+
+    main header {
+      padding: 10px 20px;
+    }
+    
+    aside#sideBar {
+      display: none;
+    }
+    
+    div#displayContentContainer {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    div.displayContentSubContainer {
+      padding: 0;
+    }
+    
+
+    /* Sidebar styles */
+ aside#sideBar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 250px; /* Full width */
+  background-color: #333;
+  color: white;
+  overflow: hidden;
+  z-index: 1000; /* Ensure it's above other elements */
+  transition: width 0.3s ease-in-out;
+}
+
+#sideBar.collapsed {
+  width: 80px; /* Collapsed width showing only icons */
+}
+
+/* Sidebar content */
+#sideBar .listContainer ul {
+  padding: 0;
+  list-style: none;
+}
+
+#sideBar .listContainer li {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+#sideBar .listContainer li svg {
+  margin-right: 10px;
+}
+
+/* Collapsed mode: Hide text */
+#sideBar.collapsed li span {
+  display: none;
+}
+
+/* Header styles */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #222;
+  color: white;
+  padding: 10px;
+  z-index: 1010; /* Ensure above sidebar */
+}
+
+.ham {
+  cursor: pointer;
+}
+
+    
+
+}    
+

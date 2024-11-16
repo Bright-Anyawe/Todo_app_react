@@ -1,0 +1,31 @@
+@media (max-width: 500px) {
+
+#root main {
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+  display: block;
+}
+
+main header {
+  
+}
+
+aside#sideBar {
+  display: none;
+}
+
+div#displayContentContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+div.displayContentSubContainer {
+  padding: 0;
+}
+
+
+
+}

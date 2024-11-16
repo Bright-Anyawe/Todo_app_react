@@ -1,0 +1,159 @@
+@media (max-width: 500px) {
+
+#root main {
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+  display: block;
+      
+             background-color: white;
+    }
+
+    main header {
+      padding: 10px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    h1.headerTextContent {
+      
+    font-size: 2.5em;
+    line-height: 1.1;
+    }
+
+    svg.arrow {
+  display: block;
+} 
+
+.arrowLeftContainer svg {
+  fill: white;
+}
+    
+    aside#sideBar {
+      /* display: none; */
+    }
+    
+    div#displayContentContainer {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    div.displayContentSubContainer {
+      padding: 0;
+    }
+
+    .arrow.left.active {
+      transform: rotate(180deg);
+    }
+    
+
+    /* Sidebar styles */
+    aside#sideBar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 250px; /* Full width */
+  background-color: #333;
+  color: white;
+  overflow: hidden;
+  z-index: 1000; /* Ensure it's above other elements */
+  transition: width 0.3s ease-in-out;
+}
+
+aside#sideBar.collapsed {
+  width: 0px; /* Collapsed width showing only icons */
+}
+
+ul#menu {
+  padding-left: 11px;
+}
+
+aside#sideBar svg {
+    fill: white;
+    width: 30px;
+}
+
+#menu .navLink {
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    font-size: 1.1rem;
+    cursor: pointer;
+    gap: 15px;
+    width: 100%;
+    padding-left: 10px;
+    height: clamp(32px, 6vw, 40px);
+}
+
+div.addProjectContainer {
+    display: flex;
+    justify-content: start;
+    align-items: self-start;
+    gap: 20px;
+    padding-left: 20px;
+}
+
+div.projectName {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  cursor: pointer;
+      gap: 1px;
+}
+
+div.projectName h3 {
+  font-size: 1rem;
+  width: 150px;
+}
+
+.projectName span {
+  margin-right: 10px;
+  font-size: 14px;
+}
+
+div#projectsContainer {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: start;
+    gap: 20px;
+}
+
+    div.projects {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1px;
+        padding-left: 15px;
+    }
+
+/* Option buttons alignment */
+.showOptions {
+  display: flex;
+  align-items: center;
+}
+
+    a.navLink {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* Push the count span to the end */
+  padding: 10px;
+  text-decoration: none;
+  color: inherit;
+}
+
+a.navLink svg {
+  margin-right: 8px; /* Add space between the icon and the text */
+}
+
+a.navLink span {
+  margin-left: auto; Ensure the count is aligned to the end
+}
+
+}    
+

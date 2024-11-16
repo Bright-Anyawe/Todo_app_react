@@ -1,0 +1,180 @@
+@media (max-width: 500px) {
+
+#root main {
+  display: flex;
+  flex-direction: column;
+}
+
+body {
+  display: block;
+      
+             background-color: white;
+    }
+
+    main header {
+      padding: 10px 20px;
+    }
+    
+    aside#sideBar {
+      /* display: none; */
+    }
+    
+    div#displayContentContainer {
+      display: flex;
+      flex-direction: column;
+    }
+    
+    div.displayContentSubContainer {
+      padding: 0;
+    }
+    
+
+    /* Sidebar styles */
+ aside#sideBar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 250px; /* Full width */
+  background-color: #333;
+  color: white;
+  overflow: hidden;
+  z-index: 1000; /* Ensure it's above other elements */
+  transition: width 0.3s ease-in-out;
+}
+
+ aside#sideBar.collapsed {
+  width: 80px; /* Collapsed width showing only icons */
+}
+
+ aside#sideBar .listContainer ul {
+  padding: 0;
+  list-style: none;
+}
+
+ aside#sideBar .listContainer li {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+ aside#sideBar .listContainer li svg {
+  margin-right: 10px;
+}
+
+/* Collapsed mode: Hide text */
+ aside#sideBar.collapsed li span {
+  display: none;
+}
+
+/* Header styles */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #222;
+  color: white;
+  padding: 10px;
+  z-index: 1010; /* Ensure above sidebar */
+}
+
+.ham {
+  cursor: pointer;
+}
+
+
+
+.listContainer ul {
+  padding: 0;
+  list-style: none;
+}
+
+.navLink {
+  display: flex;
+  align-items: center;
+  padding: 10px;
+  text-decoration: none;
+  color: #333;
+  font-size: 14px;
+  transition: all 0.3s ease-in-out;
+}
+
+.navLink svg {
+  margin-right: 10px;
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+}
+
+.navLink span {
+  margin-left: auto;
+  font-size: 12px;
+  font-weight: bold;
+  color: #666;
+}
+
+/* Adjust elements for collapsed state */
+#sideBar.collapsed .navLink span {
+  display: none; /* Hide task counts in collapsed mode */
+}
+
+#sideBar.collapsed .navLink {
+  justify-content: center;
+}
+
+#sideBar.collapsed .navLink svg {
+  margin-right: 0;
+}
+
+/* Projects Section */
+#projectsContainer {
+  margin-top: 20px;
+  padding: 0 10px;
+}
+
+.addProjectContainer {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+#sideBar.collapsed #addProjectText {
+  display: none; /* Hide text in collapsed state */
+}
+
+.projectName {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.projectName h3 {
+  flex-grow: 1;
+  margin: 0 10px;
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#sideBar.collapsed .projectName {
+  display: none; /* Hide project name in collapsed mode */
+}
+
+.projectName span {
+  margin-right: 10px;
+  font-size: 14px;
+}
+
+/* Option buttons alignment */
+.showOptions {
+  display: flex;
+  align-items: center;
+}
+
+    
+
+}    
+
