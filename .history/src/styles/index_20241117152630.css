@@ -327,21 +327,9 @@ button {
 button:hover {
   border-color: #646cff;
 }
-
-.taskBtn {
-     display: flex;
-    align-items: center;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.taskBtn.clicked {
-  background-color: #0056b3;
-  transform: scale(0.95);
-}
-
-.taskBtn:hover {
- transform: scale(0.95);
+button:focus,
+button:focus-visible {
+  transform: scale(1.2)
 }
 
 @media (prefers-color-scheme: light) {

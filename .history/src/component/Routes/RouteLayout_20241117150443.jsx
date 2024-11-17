@@ -24,7 +24,7 @@ const routes = [
             path: "inbox",
             element: <Inbox />,
           },
-          
+          { path: "inbox", element: <Inbox /> },
           { path: "today", element: <Today /> },
           { path: "tomorrow", element: <Tomorrow /> },
           { path: "thisWeek", element: <ThisWeek /> },
@@ -32,6 +32,7 @@ const routes = [
           { path: "project", element: <Project /> },
         ],
       },
+      
     ],
   },
 ];

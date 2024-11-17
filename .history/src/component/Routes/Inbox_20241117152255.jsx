@@ -134,7 +134,15 @@ export function Inbox() {
                 >
                   {todo.taskTitle}
                 </span>
-                <span > - {todo.priority}</span>
+                <span
+                  style={{
+                    textDecoration: isCompleted ? "line-through" : "none",
+                    color: isCompleted ? "grey" : "black",
+                  }}
+                >
+                  {" "}
+                  - {todo.priority}
+                </span>
 
                 <IconButton
                   onClick={() => handleOptionsClick(index)}

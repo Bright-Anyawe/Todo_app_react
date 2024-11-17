@@ -24,7 +24,8 @@ const routes = [
             path: "inbox",
             element: <Inbox />,
           },
-          
+          { path: "inbox", element: <Inbox /> }, // Ensures explicit handling of "Inbox"
+
           { path: "today", element: <Today /> },
           { path: "tomorrow", element: <Tomorrow /> },
           { path: "thisWeek", element: <ThisWeek /> },

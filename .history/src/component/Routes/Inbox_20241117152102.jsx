@@ -36,7 +36,7 @@ export function Inbox() {
       const inboxTodos =
         storedProjects.find((project) => project?.name === "Inbox")?.todos ||
         [];
-      setInboxCount(inboxTodos.length); 
+      setInboxCount(inboxTodos.length); // Initialize inbox count
     }
   }, []);
 
@@ -134,7 +134,12 @@ export function Inbox() {
                 >
                   {todo.taskTitle}
                 </span>
-                <span > - {todo.priority}</span>
+                <span> - {todo.priority}</span>
+                {isCompleted && (
+                  <span style={{ color: "green", marginLeft: "10px" }}>
+                    Task completed!
+                  </span>
+                )}
 
                 <IconButton
                   onClick={() => handleOptionsClick(index)}

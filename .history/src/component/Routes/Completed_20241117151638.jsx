@@ -18,15 +18,11 @@ export function Completed() {
   const [todoDetails, setTodoDetails] = useState(null);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
-  
-useEffect(() => {
-  const storedCompletedToDos =
-    JSON.parse(localStorage.getItem("completedToDos")) || [];
-  if (Array.isArray(storedCompletedToDos)) {
-    setCompletedToDos(storedCompletedToDos);
-  }
-}, [setCompletedToDos]);
-
+ useEffect(() => {
+   const storedCompletedToDos =
+     JSON.parse(localStorage.getItem("completedToDos")) || [];
+   setCompletedToDos(storedCompletedToDos);
+ }, [setCompletedToDos]);
 
  useEffect(() => {
    if (Array.isArray(completedToDos)) {
@@ -46,9 +42,8 @@ useEffect(() => {
 
   const handleDelete = (index) => {
     const updatedTodos = completedToDos.filter((_, i) => i !== index);
-    setCompletedToDos(updatedTodos); 
 
-
+    
     setProjects((prevProjects) => {
       return prevProjects.map((project) => {
         if (project.name === "Completed") {
@@ -57,6 +52,7 @@ useEffect(() => {
         return project;
       });
     });
+    setCompletedToDos(updatedTodos); 
   };
 
   const handleCloseDetails = () => {

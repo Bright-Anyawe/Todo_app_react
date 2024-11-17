@@ -24,13 +24,17 @@ const routes = [
             path: "inbox",
             element: <Inbox />,
           },
-          
+          { path: "inbox", element: <Inbox /> },
           { path: "today", element: <Today /> },
           { path: "tomorrow", element: <Tomorrow /> },
           { path: "thisWeek", element: <ThisWeek /> },
           { path: "completed", element: <Completed /> },
           { path: "project", element: <Project /> },
         ],
+      },
+      {
+        path: "*", // Catch-all route for unrecognized paths
+        element: <Navigate to="display/inbox" replace />, // Redirect to Inbox
       },
     ],
   },

@@ -1,9 +1,0 @@
-
-export function Inbox() {
-
-
-     return {
-          
-     }
-     
-}

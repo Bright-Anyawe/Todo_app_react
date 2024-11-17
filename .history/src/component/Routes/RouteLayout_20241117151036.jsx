@@ -6,6 +6,7 @@ import { Completed } from "./Completed";
 import Project from "./Project";
 import Display from "../Layout/Display";
 import { Today } from "./Today";
+import Navigate
 
 
 const routes = [
@@ -24,13 +25,17 @@ const routes = [
             path: "inbox",
             element: <Inbox />,
           },
-          
+          { path: "inbox", element: <Inbox /> },
           { path: "today", element: <Today /> },
           { path: "tomorrow", element: <Tomorrow /> },
           { path: "thisWeek", element: <ThisWeek /> },
           { path: "completed", element: <Completed /> },
           { path: "project", element: <Project /> },
         ],
+      },
+      {
+        path: "*", 
+        element: <Navigate to="display/inbox" replace />, 
       },
     ],
   },

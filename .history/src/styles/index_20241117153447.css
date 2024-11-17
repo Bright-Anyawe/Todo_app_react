@@ -329,8 +329,7 @@ button:hover {
 }
 
 .taskBtn {
-     display: flex;
-    align-items: center;
+ 
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
 }

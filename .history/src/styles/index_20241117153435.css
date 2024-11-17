@@ -329,19 +329,18 @@ button:hover {
 }
 
 .taskBtn {
-     display: flex;
-    align-items: center;
+ 
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
 .taskBtn.clicked {
   background-color: #0056b3;
-  transform: scale(0.95);
+  transform: scale(0.95); /* Slightly shrink the button */
 }
 
 .taskBtn:hover {
- transform: scale(0.95);
+ transform: scale(0.95); /* Hover effect */
 }
 
 @media (prefers-color-scheme: light) {

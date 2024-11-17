@@ -134,7 +134,7 @@ export function Inbox() {
                 >
                   {todo.taskTitle}
                 </span>
-                <span > - {todo.priority}</span>
+                <span> - {todo.priority}</span>
 
                 <IconButton
                   onClick={() => handleOptionsClick(index)}
