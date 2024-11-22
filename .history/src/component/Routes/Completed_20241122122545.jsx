@@ -28,8 +28,6 @@ useEffect(() => {
 }, [setCompletedToDos]);
 
 
-
-
  useEffect(() => {
    if (Array.isArray(completedToDos)) {
      setCompletedCount(completedToDos.length);

@@ -13,27 +13,17 @@ import Project from "../Routes/Project";
 const Display = () => {
   const { name } = useParams();
 
+  const handleRenderComponent() = () => {
+    
+  }
+
   return (
     <>
       <div id="displayContentContainer" data-testid="display">
         <div className="displayContentSubContainer">
           {/* <Inbox /> */}
           {/* <Outlet />{" "} */}
-          {name === "inbox" ? (
-            <Inbox />
-          ) : name === "today" ? (
-            <Today />
-          ) : name === "tomorrow" ? (
-            <Tomorrow />
-          ) : name === "thisWeek" ? (
-            <ThisWeek />
-          ) : name === "project" ? (
-            <Project />
-          ) : name === "completed" ? (
-            <Completed />)
-            : (
-            <Inbox />
-          )}
+          
         </div>
       </div>
     </>

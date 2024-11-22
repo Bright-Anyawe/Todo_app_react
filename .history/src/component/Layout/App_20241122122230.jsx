@@ -42,7 +42,7 @@ function App() {
     if (completedToDos && Array.isArray(completedToDos)) {
       localStorage.setItem("completedToDos", JSON.stringify(completedToDos));
     }
-  }, [completedToDos]); 
+  }, [completedToDos]); // This will save the completed todos to localStorage whenever the state changes
 
 useEffect(() => {
   const storedCompletedToDos =

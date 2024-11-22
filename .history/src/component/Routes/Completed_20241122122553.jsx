@@ -18,24 +18,28 @@ export function Completed() {
   const [todoDetails, setTodoDetails] = useState(null);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
-  
-useEffect(() => {
-  const storedCompletedToDos =
-    JSON.parse(localStorage.getItem("completedToDos")) || [];
-  if (Array.isArray(storedCompletedToDos)) {
-    setCompletedToDos(storedCompletedToDos);
-  }
-}, [setCompletedToDos]);
+  useEffect(() => {
+    const storedCompletedToDos =
+      JSON.parse(localStorage.getItem("completedToDos")) || [];
+    if (Array.isArray(storedCompletedToDos)) {
+      setCompletedToDos(storedCompletedToDos);
+    }
+  }, [setCompletedToDos]);
 
+  useEffect(() => {
+    const storedCompletedToDos =
+      JSON.parse(localStorage.getItem("completedToDos")) || [];
+    if (Array.isArray(storedCompletedToDos)) {
+      setCompletedToDos(storedCompletedToDos);
+    }
+  }, [setCompletedToDos]); // Only fetch from localStorage when the component mounts or updates
 
-
-
- useEffect(() => {
-   if (Array.isArray(completedToDos)) {
-     setCompletedCount(completedToDos.length);
-    //  localStorage.setItem("completedToDos", JSON.stringify(completedToDos)); // Persist to localStorage
-   }
- }, [completedToDos, setCompletedCount]);
+  useEffect(() => {
+    if (Array.isArray(completedToDos)) {
+      setCompletedCount(completedToDos.length);
+      //  localStorage.setItem("completedToDos", JSON.stringify(completedToDos)); // Persist to localStorage
+    }
+  }, [completedToDos, setCompletedCount]);
 
   const handleOptionsClick = (index) => {
     setShowOptions(showOptions === index ? null : index);
@@ -48,8 +52,7 @@ useEffect(() => {
 
   const handleDelete = (index) => {
     const updatedTodos = completedToDos.filter((_, i) => i !== index);
-    setCompletedToDos(updatedTodos); 
-
+    setCompletedToDos(updatedTodos);
 
     setProjects((prevProjects) => {
       return prevProjects.map((project) => {

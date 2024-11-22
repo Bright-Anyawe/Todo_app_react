@@ -30,7 +30,7 @@ const Display = () => {
           ) : name === "project" ? (
             <Project />
           ) : name === "completed" ? (
-            <Completed />)
+            <Completed />
             : (
             <Inbox />
           )}

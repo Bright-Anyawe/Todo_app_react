@@ -19,21 +19,7 @@ const Display = () => {
         <div className="displayContentSubContainer">
           {/* <Inbox /> */}
           {/* <Outlet />{" "} */}
-          {name === "inbox" ? (
-            <Inbox />
-          ) : name === "today" ? (
-            <Today />
-          ) : name === "tomorrow" ? (
-            <Tomorrow />
-          ) : name === "thisWeek" ? (
-            <ThisWeek />
-          ) : name === "project" ? (
-            <Project />
-          ) : name === "completed" ? (
-            <Completed />)
-            : (
-            <Inbox />
-          )}
+          
         </div>
       </div>
     </>

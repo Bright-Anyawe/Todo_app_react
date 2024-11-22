@@ -42,15 +42,10 @@ function App() {
     if (completedToDos && Array.isArray(completedToDos)) {
       localStorage.setItem("completedToDos", JSON.stringify(completedToDos));
     }
-  }, [completedToDos]); 
-
-useEffect(() => {
-  const storedCompletedToDos =
-    JSON.parse(localStorage.getItem("completedToDos")) || [];
-  setCompletedToDos(storedCompletedToDos);
-}, []);
+  }, [completedToDos]); // This will save the completed todos to localStorage whenever the state changes
 
 
+  
   const [isCollapsed, setIsCollapsed] = useState(true);
 
   const toggleSidebar = () => {

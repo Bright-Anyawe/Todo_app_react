@@ -13,13 +13,8 @@ import Project from "../Routes/Project";
 const Display = () => {
   const { name } = useParams();
 
-  return (
-    <>
-      <div id="displayContentContainer" data-testid="display">
-        <div className="displayContentSubContainer">
-          {/* <Inbox /> */}
-          {/* <Outlet />{" "} */}
-          {name === "inbox" ? (
+  const handleRenderComponent = () => {
+    {name === "inbox" ? (
             <Inbox />
           ) : name === "today" ? (
             <Today />
@@ -34,6 +29,15 @@ const Display = () => {
             : (
             <Inbox />
           )}
+  }
+
+  return (
+    <>
+      <div id="displayContentContainer" data-testid="display">
+        <div className="displayContentSubContainer">
+          {/* <Inbox /> */}
+          {/* <Outlet />{" "} */}
+          
         </div>
       </div>
     </>

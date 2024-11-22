@@ -29,10 +29,9 @@ const Display = () => {
             <ThisWeek />
           ) : name === "project" ? (
             <Project />
-          ) : name === "completed" ? (
-            <Completed />)
-            : (
-            <Inbox />
+          ) : name === "project" ? (
+            <Completed />: (
+            <Completed />
           )}
         </div>
       </div>
