@@ -55,7 +55,7 @@ function App() {
       localStorage.setItem("completedToDos", JSON.stringify(updatedTodos)); 
       return updatedTodos;
     });
-    setCompletedCount((prevCount) => prevCount + 1);
+    setCompletedCount((prevCount) => prevCount + 1); // Correct count increment
   };
 
   const arrowRef = useRef(null);

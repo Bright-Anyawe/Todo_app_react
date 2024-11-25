@@ -22,7 +22,6 @@ const NewProjectForm = () => {
     projectName,
     setProjectName,
     selectedProjectIndex,
-    setSelectedProjectName,
   } = useContext(ProjectContext);
   const { setOpen } = useContext(GeneralContext);
 
@@ -55,8 +54,6 @@ const NewProjectForm = () => {
         { name: projectName, todos: [], completed: false },
       ]);
     }
-      setSelectedProjectName(projectName);
-
     setProjectName("");
     handleCloseForm();
     navigate("/display/project");

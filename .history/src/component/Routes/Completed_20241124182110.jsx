@@ -17,26 +17,31 @@ export function Completed() {
   const [detailsOpen, setDetailsOpen] = useState(false);
   const [todoDetails, setTodoDetails] = useState(null);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
-  const [isDataLoaded, setIsDataLoaded] = useState(false);
+    const [isDataLoaded, setIsDataLoaded] = useState(false);
 
 
-  useEffect(() => {
-    const storedCompletedToDos =
-      JSON.parse(localStorage.getItem("completedToDos")) || [];
-    setCompletedToDos(storedCompletedToDos);
-    setIsDataLoaded(true);
-  }, [setCompletedToDos]);
+  // useEffect(() => {
+  //   const storedCompletedToDos =
+  //     JSON.parse(localStorage.getItem("completedToDos")) || [];
+  //   setCompletedToDos(storedCompletedToDos);
+  // }, []);
 
-  useEffect(() => {
-    if (Array.isArray(completedToDos)) {
-      setCompletedCount(completedToDos.length);
-      localStorage.setItem("completedToDos", JSON.stringify(completedToDos));
-    }
-  }, [completedToDos, setCompletedCount]);
 
-  if (!isDataLoaded) {
-    return <div>Loading...</div>;
-  }
+useEffect(() => {
+  const storedCompletedToDos =
+    JSON.parse(localStorage.getItem("completedToDos")) || [];
+  setCompletedToDos(storedCompletedToDos);
+  setIsDataLoaded(true); 
+}, [setCompletedToDos]);
+
+
+ useEffect(() => {
+   if (Array.isArray(completedToDos)) {
+     setCompletedCount(completedToDos.length);
+     localStorage.setItem("completedToDos", JSON.stringify(completedToDos)); // Persist to localStorage
+
+   }
+ }, [completedToDos, setCompletedCount]);
 
   const handleOptionsClick = (index) => {
     setShowOptions(showOptions === index ? null : index);
@@ -49,7 +54,8 @@ export function Completed() {
 
   const handleDelete = (index) => {
     const updatedTodos = completedToDos.filter((_, i) => i !== index);
-    setCompletedToDos(updatedTodos);
+    setCompletedToDos(updatedTodos); 
+
 
     setProjects((prevProjects) => {
       return prevProjects.map((project) => {

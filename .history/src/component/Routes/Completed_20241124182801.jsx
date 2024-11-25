@@ -19,6 +19,11 @@ export function Completed() {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
   const [isDataLoaded, setIsDataLoaded] = useState(false);
 
+  // useEffect(() => {
+  //   const storedCompletedToDos =
+  //     JSON.parse(localStorage.getItem("completedToDos")) || [];
+  //   setCompletedToDos(storedCompletedToDos);
+  // }, []);
 
   useEffect(() => {
     const storedCompletedToDos =

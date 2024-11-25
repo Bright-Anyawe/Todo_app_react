@@ -305,7 +305,7 @@
 @media (min-width: 1001px) and (max-width: 1115px) {
  body main {
   display: grid;
-  grid-template-columns: 300px 75vw;
+  grid-template-columns: 300px 76.8vw;
   grid-template-rows: 100px 600px;
 }
 

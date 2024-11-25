@@ -72,34 +72,17 @@ export default function Project() {
     setTodoDetails(null);
   };
 
-  // const handleCheckBoxChange = (index, todo) => {
-  //   markTodoAsCompleted(todo);
-
-  //   setCompletedToDos((prevCompletedToDos) => {
-  //     if (prevCompletedToDos.includes(index)) {
-  //       return prevCompletedToDos.filter((i) => i !== index);
-  //     } else {
-  //       return [...prevCompletedToDos, index];
-  //     }
-  //   });
-  // };
-
   const handleCheckBoxChange = (index, todo) => {
-    markTodoAsCompleted(todo);
+markTodoAsCompleted(todo)
 
-    setProjects((prevProjects) =>
-      prevProjects.map((proj) => {
-        if (proj.name === project.name) {
-          const updatedTodos = proj.todos.map((t, i) =>
-            i === index ? { ...t, completed: true } : t
-          );
-          return { ...proj, todos: updatedTodos };
-        }
-        return proj;
-      })
-    );
+    setCompletedToDos((prevCompletedToDos) => {
+      if (prevCompletedToDos.includes(index)) {
+        return prevCompletedToDos.filter((i) => i !== index);
+      } else {
+        return [...prevCompletedToDos, index];
+      }
+    });
   };
-
 
   return (
     <div className="inboxTaskContainer">
@@ -110,52 +93,48 @@ export default function Project() {
       <div className="taskContainer">
         {Array.isArray(projectToDos) &&
           projectToDos.map((todo, index) => {
-            const isCompleted = todo.completed || false;
-            const priorityColor = getPriorityColor(todo.priority);
+          const isCompleted = todo.completed || false;
+          const priorityColor = getPriorityColor(todo.priority);
 
             return (
               <div key={index} className="taskItem">
-                <div className="taskContent">
-                  <Checkbox
-                    onClick={() => handleCheckBoxChange(index, todo)}
-                    checked={!!isCompleted}
-                    disabled={!!isCompleted}
-                    style={{ float: "left" }}
-                  />
-                  <div className="todoTextContent">
-                    <p
-                      style={{
-                        textDecoration: isCompleted ? "line-through" : "none",
-                        color: isCompleted ? "grey" : "black",
-                      }}
-                    >
-                      {todo.taskTitle}
-                    </p>
-                    <p style={{ color: priorityColor }}> - {todo.priority}</p>
-                  </div>{" "}
-                  <IconButton
-                    onClick={() => handleOptionsClick(index)}
-                    style={{ marginLeft: "auto" }}
-                  >
-                    <MoreVertIcon />
-                  </IconButton>
-                  {showOptions === index && (
-                    <div className="taskOptions">
-                      <IconButton onClick={() => handleEditClick(todo)}>
-                        <EditIcon /> Edit
-                      </IconButton>
-                      <IconButton onClick={() => handleDelete(index)}>
-                        <DeleteIcon /> Delete
-                      </IconButton>
-                      <IconButton onClick={() => handleToDoDetails(todo)}>
-                        <InfoIcon /> Details
-                      </IconButton>
-                    </div>
-                  )}
-                </div>
+              <div className="taskContent">
+                <Checkbox
+                  onClick={() => handleCheckBoxChange(index, todo)}
+                  checked={!!isCompleted}
+                  disabled={!!isCompleted}
+                  style={{ float: "left" }}
+                />
+                <div className="todoTextContent">
+                  <p style={{
+                    textDecoration: isCompleted ? "line-through" : "none",
+                    color: isCompleted ? "grey" : "black",
+                  }}>{todo.taskTitle}</p>
+                  <p style={{color: priorityColor}}> - {todo.priority}</p>
+                </div>{" "}
+                <IconButton
+                  onClick={() => handleOptionsClick(index)}
+                  style={{ marginLeft: "auto" }}
+                >
+                  <MoreVertIcon />
+                </IconButton>
+                {showOptions === index && (
+                  <div className="taskOptions">
+                    <IconButton onClick={() => handleEditClick(todo)}>
+                      <EditIcon /> Edit
+                    </IconButton>
+                    <IconButton onClick={() => handleDelete(index)}>
+                      <DeleteIcon /> Delete
+                    </IconButton>
+                    <IconButton onClick={() => handleToDoDetails(todo)}>
+                      <InfoIcon /> Details
+                    </IconButton>
+                  </div>
+                )}
               </div>
-            );
-          })}
+            </div>
+            )
+})}
       </div>
       <FormButton />
       {

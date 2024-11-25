@@ -52,10 +52,10 @@ function App() {
   const markTodoAsCompleted = (todo) => {
     setCompletedToDos((prevCompletedToDos) => {
       const updatedTodos = [...prevCompletedToDos, todo];
-      localStorage.setItem("completedToDos", JSON.stringify(updatedTodos)); 
+      localStorage.setItem("completedToDos", JSON.stringify(updatedTodos)); // Sync with localStorage
       return updatedTodos;
     });
-    setCompletedCount((prevCount) => prevCount + 1);
+    setCompletedCount((prevCount) => prevCount + 1); // Correct count increment
   };
 
   const arrowRef = useRef(null);

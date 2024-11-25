@@ -43,7 +43,7 @@ export default function FormDialog() {
     setCompletedCount,
     selectedTodo,
   } = useContext(GeneralContext);
-  const { projects, setProjects, setSelectedProjectName, selectedProjectName } =
+  const { projects, setProjects, setSelectedProjectName } =
     useContext(ProjectContext);
 
   const { taskTitle, description, priority, date, projectName } = state;
@@ -78,16 +78,7 @@ export default function FormDialog() {
     }
   }, [selectedTodo]);
 
-  useEffect(() => {
-    if (selectedProjectName) {
-      dispatch({
-        type: "Update_form_inputs",
-        fieldName: "projectName",
-        fieldValue: selectedProjectName,
-      });
-    }
-  }, [selectedProjectName]);
-
+  
 
   const handleClose = () => {
     setOpen(false);

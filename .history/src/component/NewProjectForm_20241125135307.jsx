@@ -22,7 +22,6 @@ const NewProjectForm = () => {
     projectName,
     setProjectName,
     selectedProjectIndex,
-    setSelectedProjectName,
   } = useContext(ProjectContext);
   const { setOpen } = useContext(GeneralContext);
 

@@ -57,5 +57,6 @@ describe("App", () => {
     const sideBar = screen.getByTestId("sidebar");
 
     expect(sideBar).toBeInTheDocument();
+    //     expect(headerContentsContainer).toBeInTheDocument();
   });
 });

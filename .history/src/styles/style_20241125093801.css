@@ -149,7 +149,7 @@
   }
 }
 
-@media (min-width: 501px) and (max-width: 1000px) {
+@media (min-width: 501px) and (max-width: 800px) {
  
   #root main {
     display: flex;
@@ -300,46 +300,4 @@
     margin-left: auto;
   }
 
-}
-
-@media (min-width: 1001px) and (max-width: 1115px) {
- body main {
-  display: grid;
-  grid-template-columns: 300px 75vw;
-  grid-template-rows: 100px 600px;
-}
-
-main header {
-  grid-area: 1 / 1 / 2 / 4;
-  background-color: rgb(19, 26, 41);
-      display: flex;
-    align-items: self-end;
-}
-
-.subHeadContainer {
-  display: flex;
-}
-
-.subHeadContainer svg {
-  fill: var(--svg-dominion-color);
-  width: 39px;
-}
-
-#displayContentContainer {
-  display: grid;
-  grid-area: 2 / 2 / 4 / 4;
-      color: black;
-
-  background-color: white;
-}
-
-.displayContentSubContainer {
-    padding-top: 40px;
-    padding-left: 60px;
-}
-
-#taskBtnContainer {
-    display: flex;
-    
-}
 }

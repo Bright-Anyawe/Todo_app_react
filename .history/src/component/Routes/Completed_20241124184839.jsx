@@ -25,7 +25,7 @@ export function Completed() {
       JSON.parse(localStorage.getItem("completedToDos")) || [];
     setCompletedToDos(storedCompletedToDos);
     setIsDataLoaded(true);
-  }, [setCompletedToDos]);
+  }, [completedToDos]);
 
   useEffect(() => {
     if (Array.isArray(completedToDos)) {

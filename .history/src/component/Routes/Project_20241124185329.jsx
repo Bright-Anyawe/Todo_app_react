@@ -72,34 +72,17 @@ export default function Project() {
     setTodoDetails(null);
   };
 
-  // const handleCheckBoxChange = (index, todo) => {
-  //   markTodoAsCompleted(todo);
-
-  //   setCompletedToDos((prevCompletedToDos) => {
-  //     if (prevCompletedToDos.includes(index)) {
-  //       return prevCompletedToDos.filter((i) => i !== index);
-  //     } else {
-  //       return [...prevCompletedToDos, index];
-  //     }
-  //   });
-  // };
-
   const handleCheckBoxChange = (index, todo) => {
     markTodoAsCompleted(todo);
 
-    setProjects((prevProjects) =>
-      prevProjects.map((proj) => {
-        if (proj.name === project.name) {
-          const updatedTodos = proj.todos.map((t, i) =>
-            i === index ? { ...t, completed: true } : t
-          );
-          return { ...proj, todos: updatedTodos };
-        }
-        return proj;
-      })
-    );
+    setCompletedToDos((prevCompletedToDos) => {
+      if (prevCompletedToDos.includes(index)) {
+        return prevCompletedToDos.filter((i) => i !== index);
+      } else {
+        return [...prevCompletedToDos, index];
+      }
+    });
   };
-
 
   return (
     <div className="inboxTaskContainer">

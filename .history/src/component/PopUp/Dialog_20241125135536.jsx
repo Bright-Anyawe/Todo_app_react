@@ -43,7 +43,7 @@ export default function FormDialog() {
     setCompletedCount,
     selectedTodo,
   } = useContext(GeneralContext);
-  const { projects, setProjects, setSelectedProjectName, selectedProjectName } =
+  const { projects, setProjects, setSelectedProjectName } =
     useContext(ProjectContext);
 
   const { taskTitle, description, priority, date, projectName } = state;

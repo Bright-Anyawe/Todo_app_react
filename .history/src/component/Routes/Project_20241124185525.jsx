@@ -84,23 +84,6 @@ export default function Project() {
   //   });
   // };
 
-  const handleCheckBoxChange = (index, todo) => {
-    markTodoAsCompleted(todo);
-
-    setProjects((prevProjects) =>
-      prevProjects.map((proj) => {
-        if (proj.name === project.name) {
-          const updatedTodos = proj.todos.map((t, i) =>
-            i === index ? { ...t, completed: true } : t
-          );
-          return { ...proj, todos: updatedTodos };
-        }
-        return proj;
-      })
-    );
-  };
-
-
   return (
     <div className="inboxTaskContainer">
       <div className="taskTitle">
