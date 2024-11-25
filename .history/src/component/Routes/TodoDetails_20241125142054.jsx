@@ -68,19 +68,13 @@ const styles = {
             <Typography variant="h6" style={styles.taskTitle}>
               Task: {todo.taskTitle}
             </Typography>
-            <Typography variant="body1" style={styles.label}>
-              <strong>Description:</strong>{" "}
-              {todo.description || "No description provided"}
+            <Typography variant="body1">
+              Description: {todo.description}
             </Typography>
-            <Typography variant="body1" style={styles.label}>
-              <strong>Priority:</strong>{" "}
-              <span>
-                {todo.priority}
-              </span>
-            </Typography>{" "}
-            <Typography variant="body1" style={styles.label}>
-              <strong>Due Date:</strong>{" "}
-              {todo.date ? formatDateInWords(todo.date) : "No date set"}
+            <Typography variant="body1">Priority: {todo.priority}</Typography>
+            <Typography variant="body1">
+              {" "}
+              Due Date: {formatDateInWords(todo.date)}
             </Typography>
           </DialogContent>
           <DialogActions>

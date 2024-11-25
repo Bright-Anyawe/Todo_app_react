@@ -72,15 +72,10 @@ const styles = {
               <strong>Description:</strong>{" "}
               {todo.description || "No description provided"}
             </Typography>
-            <Typography variant="body1" style={styles.label}>
-              <strong>Priority:</strong>{" "}
-              <span>
-                {todo.priority}
-              </span>
-            </Typography>{" "}
-            <Typography variant="body1" style={styles.label}>
-              <strong>Due Date:</strong>{" "}
-              {todo.date ? formatDateInWords(todo.date) : "No date set"}
+            <Typography variant="body1">Priority: {todo.priority}</Typography>
+            <Typography variant="body1">
+              {" "}
+              Due Date: {formatDateInWords(todo.date)}
             </Typography>
           </DialogContent>
           <DialogActions>

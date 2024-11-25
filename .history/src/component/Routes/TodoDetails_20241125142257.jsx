@@ -74,7 +74,7 @@ const styles = {
             </Typography>
             <Typography variant="body1" style={styles.label}>
               <strong>Priority:</strong>{" "}
-              <span>
+              <span style={getPriorityStyle(todo.priority)}>
                 {todo.priority}
               </span>
             </Typography>{" "}

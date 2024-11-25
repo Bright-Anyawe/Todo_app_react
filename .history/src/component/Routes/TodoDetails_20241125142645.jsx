@@ -44,6 +44,7 @@ const styles = {
   },
   label: {
     marginBottom: "12px",
+    fonteight: "600",
   },
   dialogActions: {
     justifyContent: "center",
