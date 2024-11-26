@@ -12,7 +12,9 @@ import { FormButton } from "../Button";
 export default function Project() {
 
   const {
+
     setOpen,
+
     getPriorityColor,
     markTodoAsCompleted,
   } = useContext(GeneralContext);

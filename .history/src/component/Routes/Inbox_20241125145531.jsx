@@ -39,6 +39,22 @@ export function Inbox() {
     }
   }, []);
 
+  const handleAddButtonClick = (route) => {
+    const projectMap = {
+      "/inbox": "Inbox",
+      "/today": "Today",
+      "/tomorrow": "Tomorrow",
+      "/thisWeek": "ThisWeek",
+      // Add other routes as necessary
+    };
+    const projectName = projectMap[route] || "Inbox"; // Default to Inbox
+    setSelectedProjectName(projectName); // Update the context or state
+    setOpen(true); // Open the dialog
+  };
+
+  <FormButton onAddClick={handleAddButtonClick} />;
+
+
   const handleOptionsClick = (index) => {
     setShowOptions(showOptions === index ? null : index);
   };
@@ -97,39 +113,6 @@ export function Inbox() {
     setSnackbarOpen(true);
   };
 
-  // const handleCheckBoxChange = (index, todo) => {
-  //   const updatedTodos = inboxToDos.map((todo, i) => {
-  //     if (i === index) {
-  //       return { ...todo, completed: !todo.completed };
-  //     }
-  //     return todo;
-  //   });
-
-  //   setProjects((prevProjects) => {
-  //     const updatedProjects = prevProjects.map((project) => {
-  //       if (project.name === "Inbox") {
-  //         return { ...project, todos: updatedTodos };
-  //       }
-  //       return project;
-  //     });
-  //     localStorage.setItem("projects", JSON.stringify(updatedProjects));
-  //     return updatedProjects;
-  //   });
-
-  //   // setCompletedToDos((prevCompletedToDos) => [...prevCompletedToDos, todo]);
-  //   setCompletedToDos((prevCompletedToDos) => {
-  //     if (!prevCompletedToDos.some((t) => t.id === todo.id)) {
-  //       return [...prevCompletedToDos, { ...todo, completed: true }];
-  //     }
-  //     return prevCompletedToDos;
-  //   });
-
-  //   const completedCount = Array.isArray(completedToDos)
-  //     ? completedToDos.length
-  //     : 0;
-  //   setCompletedCount(completedCount);
-  //   setSnackbarOpen(true);
-  // };
 
   const handleCloseSnackbar = () => {
     setSnackbarOpen(false);

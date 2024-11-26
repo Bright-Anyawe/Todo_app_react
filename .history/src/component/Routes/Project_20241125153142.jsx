@@ -6,13 +6,19 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import InfoIcon from "@mui/icons-material/Info";
 import { useState } from "react";
+import FormDialog from "../PopUp/Dialog";
 import { TodoDetails } from "./TodoDetails";
+import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { FormButton } from "../Button";
 
 export default function Project() {
+  // const navigate = useNavigate();
 
   const {
+
     setOpen,
+
     getPriorityColor,
     markTodoAsCompleted,
   } = useContext(GeneralContext);
