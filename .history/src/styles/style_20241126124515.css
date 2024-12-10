@@ -316,13 +316,6 @@ main header {
     align-items: self-end;
 }
 
-div.taskContent {
-    display: flex
-;
-    align-items: center;
-    width: 95%;
-}
-
 .subHeadContainer {
   display: flex;
 }

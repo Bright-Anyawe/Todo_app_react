@@ -27,11 +27,11 @@ const NewProjectForm = () => {
   } = useContext(ProjectContext);
   const { setOpen } = useContext(GeneralContext);
 
-  // useEffect(() => {
-  //   if (projects && Array.isArray(projects)) {
-  //     localStorage.setItem("projects", JSON.stringify(projects));
-  //   }
-  // }, [projects]);
+  useEffect(() => {
+    if (projects && Array.isArray(projects)) {
+      localStorage.setItem("projects", JSON.stringify(projects));
+    }
+  }, [projects]);
 
   const handleProjectName = (e) => {
     const name = e.target.value;

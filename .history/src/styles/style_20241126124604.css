@@ -316,11 +316,11 @@ main header {
     align-items: self-end;
 }
 
-div.taskContent {
+.taskContent {
     display: flex
 ;
     align-items: center;
-    width: 95%;
+    width: 92%;
 }
 
 .subHeadContainer {

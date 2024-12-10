@@ -96,6 +96,7 @@ export function Inbox() {
 
     setSnackbarOpen(true);
   };
+
   
   const handleCloseSnackbar = () => {
     setSnackbarOpen(false);

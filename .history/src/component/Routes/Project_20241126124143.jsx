@@ -1,5 +1,5 @@
 import { GeneralContext, ProjectContext } from "../Layout/App";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { IconButton, Checkbox } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import EditIcon from "@mui/icons-material/Edit";
@@ -22,13 +22,10 @@ export default function Project() {
     projects = [],
     setProjects,
     selectedProjectName,
-    setSelectedTodo
   } = useContext(ProjectContext);
   const [showOptions, setShowOptions] = useState(null);
   const [detailsOpen, setDetailsOpen] = useState(false);
   const [todoDetails, setTodoDetails] = useState(null);
-
-
 
   const project = projects.find(
     (proj) =>

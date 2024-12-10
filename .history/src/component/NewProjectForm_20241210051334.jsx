@@ -27,11 +27,11 @@ const NewProjectForm = () => {
   } = useContext(ProjectContext);
   const { setOpen } = useContext(GeneralContext);
 
-  // useEffect(() => {
-  //   if (projects && Array.isArray(projects)) {
-  //     localStorage.setItem("projects", JSON.stringify(projects));
-  //   }
-  // }, [projects]);
+  useEffect(() => {
+    if (projects && Array.isArray(projects)) {
+      localStorage.setItem("projects", JSON.stringify(projects));
+    }
+  }, [projects]);
 
   const handleProjectName = (e) => {
     const name = e.target.value;
@@ -46,27 +46,31 @@ const NewProjectForm = () => {
     setOpenProjectForm(false);
   };
 
-  const handleSubmit = () => {
-    if (selectedProjectIndex !== null) {
-      setProjects((prevProjects) => {
-        const updatedProjects = prevProjects.map((project, index) =>
-          index === selectedProjectIndex
-            ? { ...project, name: projectName }
-            : project
-        );
-        localStorage.setItem("projects", JSON.stringify(updatedProjects));
-        return updatedProjects;
-      });
-    } else {
-      const newProject = { name: projectName, todos: [], completed: false };
+  
 
+  const handleSubmit = () => {
+
+    if (selectedProjectIndex !== null) {
+        setProjects((prevProjects) => {
+          const updatedProjects = prevProjects.map((project, index) =>
+            index === selectedProjectIndex
+              ? { ...project, name: projectName }
+              : project
+          );
+          localStorage.setItem("projects", JSON.stringify(updatedProjects));
+          return updatedProjects;
+        });
+    } else {
+      
       setProjects((prevProjects) => {
         const updatedProjects = [...prevProjects, newProject];
+        // Sync updated state to localStorage
         localStorage.setItem("projects", JSON.stringify(updatedProjects));
         return updatedProjects;
       });
     }
-    setSelectedProjectName(projectName);
+      setSelectedProjectName(projectName);
+
 
     setProjectName("");
     handleCloseForm();

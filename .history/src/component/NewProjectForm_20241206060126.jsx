@@ -1,5 +1,4 @@
 import * as React from "react";
-import { useEffect } from "react";
 import {
   Dialog,
   DialogActions,
@@ -27,11 +26,11 @@ const NewProjectForm = () => {
   } = useContext(ProjectContext);
   const { setOpen } = useContext(GeneralContext);
 
-  // useEffect(() => {
-  //   if (projects && Array.isArray(projects)) {
-  //     localStorage.setItem("projects", JSON.stringify(projects));
-  //   }
-  // }, [projects]);
+  useEffect(() => {
+    if (pro && Array.isArray(completedToDos)) {
+      localStorage.setItem("completedToDos", JSON.stringify(completedToDos));
+    }
+  }, [completedToDos]);
 
   const handleProjectName = (e) => {
     const name = e.target.value;
@@ -46,27 +45,27 @@ const NewProjectForm = () => {
     setOpenProjectForm(false);
   };
 
+  
+
   const handleSubmit = () => {
+
     if (selectedProjectIndex !== null) {
-      setProjects((prevProjects) => {
-        const updatedProjects = prevProjects.map((project, index) =>
+      setProjects((prevProjects) =>
+        prevProjects.map((project, index) =>
           index === selectedProjectIndex
             ? { ...project, name: projectName }
             : project
-        );
-        localStorage.setItem("projects", JSON.stringify(updatedProjects));
-        return updatedProjects;
-      });
+        )
+      );
     } else {
-      const newProject = { name: projectName, todos: [], completed: false };
-
-      setProjects((prevProjects) => {
-        const updatedProjects = [...prevProjects, newProject];
-        localStorage.setItem("projects", JSON.stringify(updatedProjects));
-        return updatedProjects;
-      });
+      setProjects([
+        ...projects,
+        { name: projectName, todos: [], completed: false },
+      ]);
+      localStorage.setItem("projects", JSON.stringify(projects));
     }
-    setSelectedProjectName(projectName);
+      setSelectedProjectName(projectName);
+
 
     setProjectName("");
     handleCloseForm();

@@ -28,6 +28,12 @@ export default function Project() {
   const [detailsOpen, setDetailsOpen] = useState(false);
   const [todoDetails, setTodoDetails] = useState(null);
 
+  useEffect(() => {
+    const savedProjects = localStorage.getItem("projects");
+    if (savedProjects) {
+      setProjects(JSON.parse(savedProjects));
+    }
+  }, [setProjects]);
 
 
   const project = projects.find(
