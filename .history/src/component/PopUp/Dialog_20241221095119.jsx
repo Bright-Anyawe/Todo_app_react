@@ -39,6 +39,7 @@ export default function FormDialog() {
     setTomorrowCount,
     thisWeekCount,
     setThisWeekCount,
+
     selectedTodo,
   } = useContext(GeneralContext);
   const { projects, setProjects, setSelectedProjectName, selectedProjectName } =
@@ -66,7 +67,7 @@ export default function FormDialog() {
       dispatch({
         type: "Update_form_inputs",
         fieldName: "date",
-        fieldValue: new Date(selectedTodo.date),
+        fieldValue: selectedTodo.date,
       });
       dispatch({
         type: "Update_form_inputs",
@@ -86,8 +87,8 @@ export default function FormDialog() {
     }
   }, [selectedProjectName]);
 
+
   const handleClose = () => {
-    document.getElementById("root").removeAttribute("inert");
     setOpen(false);
   };
 
@@ -157,52 +158,56 @@ export default function FormDialog() {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const selectedProjectName = state.projectName || "Inbox";
-    setSelectedProjectName(selectedProjectName);
 
-    const newTodo = { ...state };
+  const selectedProjectName = state.projectName || "Inbox";
+  setSelectedProjectName(selectedProjectName);
 
-    setProjects((prevProjects) => {
-      const updatedProjects = prevProjects.map((project) => {
-        if (project.name === selectedProjectName) {
-          const updatedTodos = selectedTodo
-            ? project.todos.map((todo) =>
-                todo === selectedTodo ? newTodo : todo
-              )
-            : [...project.todos, newTodo];
-          return { ...project, todos: updatedTodos };
-        }
-        return project;
-      });
+  const newTodo = { ...state };
 
-      localStorage.setItem("projects", JSON.stringify(updatedProjects));
-      return updatedProjects;
+  setProjects((prevProjects) => {
+    const updatedProjects = prevProjects.map((project) => {
+      if (project.name === selectedProjectName) {
+        const updatedTodos = selectedTodo
+          ? project.todos.map((todo) =>
+              todo === selectedTodo ? newTodo : todo
+            )
+          : [...project.todos, newTodo];
+        return { ...project, todos: updatedTodos };
+      }
+      return project;
     });
 
-    if (selectedProjectName === "Inbox") {
-      if (!selectedTodo) {
-        setInboxCount(inboxCount + 1);
-      }
-    } else if (selectedProjectName === "Today") {
-      if (!selectedTodo) {
-        setTodayCount(todayCount + 1);
-      }
-    } else if (selectedProjectName === "Tomorrow") {
-      if (!selectedTodo) {
-        setTomorrowCount(tomorrowCount + 1);
-      }
-    } else if (selectedProjectName === "Weekly") {
-      if (!selectedTodo) {
-        setThisWeekCount(thisWeekCount + 1);
-      }
+    localStorage.setItem("projects", JSON.stringify(updatedProjects));
+    return updatedProjects;
+  });
+
+  if (selectedProjectName === "Inbox") {
+    if (!selectedTodo) {
+      setInboxCount(inboxCount + 1);
     }
+  } else if (selectedProjectName === "Today") {
+    if (!selectedTodo) {
+      setTodayCount(todayCount + 1);
+    }
+  } else if (selectedProjectName === "Tomorrow") {
+    if (!selectedTodo) {
+      setTomorrowCount(tomorrowCount + 1);
+    }
+  } else if (selectedProjectName === "ThisWeek") {
+    if (!selectedTodo) {
+      setThisWeekCount(thisWeekCount + 1);
+    }
+  }
 
     const convertedName =
       selectedProjectName.charAt(0).toLowerCase() +
       selectedProjectName.slice(1);
 
+
     if (
-      ["Inbox", "Today", "Tomorrow", "Weekly"].includes(selectedProjectName)
+      ["Inbox", "Today", "Tomorrow", "ThisWeek"].includes(
+        selectedProjectName
+      )
     ) {
       console.dir(convertedName, { depth: null });
       navigate(`/display/${convertedName}`);
@@ -288,7 +293,7 @@ export default function FormDialog() {
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DatePicker
               label="Due Date"
-              value={date instanceof Date && !isNaN(date) ? date : null}
+              value={date}
               onChange={handleDateChange}
               slotProps={{
                 textField: {

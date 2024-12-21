@@ -23,7 +23,7 @@ function App() {
     { name: "Inbox", todos: [] },
     { name: "Today", todos: [] },
     { name: "Tomorrow", todos: [] },
-    { name: "Weekly", todos: [] },
+    { name: "Week", todos: [] },
   ]);
   const [projectName, setProjectName] = useState("");
   const [selectedProjectName, setSelectedProjectName] = useState("");

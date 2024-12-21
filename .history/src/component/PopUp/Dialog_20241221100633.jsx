@@ -87,7 +87,7 @@ export default function FormDialog() {
   }, [selectedProjectName]);
 
   const handleClose = () => {
-    document.getElementById("root").removeAttribute("inert");
+        document.getElementById("root").setAttribute("inert");
     setOpen(false);
   };
 
@@ -191,7 +191,7 @@ export default function FormDialog() {
       if (!selectedTodo) {
         setTomorrowCount(tomorrowCount + 1);
       }
-    } else if (selectedProjectName === "Weekly") {
+    } else if (selectedProjectName === "ThisWeek") {
       if (!selectedTodo) {
         setThisWeekCount(thisWeekCount + 1);
       }
@@ -202,7 +202,7 @@ export default function FormDialog() {
       selectedProjectName.slice(1);
 
     if (
-      ["Inbox", "Today", "Tomorrow", "Weekly"].includes(selectedProjectName)
+      ["Inbox", "Today", "Tomorrow", "ThisWeek"].includes(selectedProjectName)
     ) {
       console.dir(convertedName, { depth: null });
       navigate(`/display/${convertedName}`);

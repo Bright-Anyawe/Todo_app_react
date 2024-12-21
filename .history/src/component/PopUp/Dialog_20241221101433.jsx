@@ -202,7 +202,7 @@ export default function FormDialog() {
       selectedProjectName.slice(1);
 
     if (
-      ["Inbox", "Today", "Tomorrow", "Weekly"].includes(selectedProjectName)
+      ["Inbox", "Today", "Tomorrow", "ThisWeek"].includes(selectedProjectName)
     ) {
       console.dir(convertedName, { depth: null });
       navigate(`/display/${convertedName}`);

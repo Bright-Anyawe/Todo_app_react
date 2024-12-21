@@ -5,16 +5,21 @@ import MoreVertIcon from "@mui/icons-material/MoreVert";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import InfoIcon from "@mui/icons-material/Info";
-import { useState, useEffect } from "react";
-import { TodoDetails } from "./TodoDetails";
+import { useState } from "react";
 import { FormButton } from "../Button";
+import { TodoDetails } from "./TodoDetails";
+import { useEffect } from "react";
+import 'wicg-inert'; 
 
-export function Tomorrow() {
+
+export function Today() {
   const {
     setOpen,
     setSelectedTodo,
+    completedToDos,
     setCompletedToDos,
-    setTomorrowCount,
+    setTodayCount,
+    setCompletedCount,
     getPriorityColor,
     markTodoAsCompleted,
   } = useContext(GeneralContext);
@@ -25,28 +30,20 @@ export function Tomorrow() {
   const [todoDetails, setTodoDetails] = useState(null);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
-  const tomorrowToDos =
-    projects.find((project) => project?.name === "Tomorrow")?.todos || [];
+  const todayToDos =
+    projects.find((project) => project?.name === "Today")?.todos || [];
 
   useEffect(() => {
     const storedProjects = JSON.parse(localStorage.getItem("projects"));
     if (storedProjects && storedProjects.length) {
-      const updatedProjects = storedProjects.map((project) => {
-        if (project.name === "Tomorrow") {
-          project.todos = project.todos.map((todo) => ({
-            ...todo,
-            completed: todo.completed ?? false,
-          }));
-        }
-        return project;
-      });
-      setProjects(updatedProjects);
-      localStorage.setItem("projects", JSON.stringify(updatedProjects));
-
-      const tomorrowToDos =
-        updatedProjects.find((project) => project?.name === "Tomorrow")
-          ?.todos || [];
-      setTomorrowCount(tomorrowToDos.length);
+      setProjects(storedProjects);
+      const todayToDos =
+        storedProjects.find((project) => project?.name === "Today")?.todos ||
+        [];
+        const todayCount = Array.isArray(todayToDos)
+          ? todayToDos.length
+          : 0;
+      setTodayCount(todayCount);
     }
   }, []);
 
@@ -60,22 +57,23 @@ export function Tomorrow() {
   };
 
   const handleDelete = (index) => {
-    const updatedToDos = tomorrowToDos.filter((_, i) => i !== index);
+    const updatedToDos = todayToDos.filter((_, i) => i !== index);
 
     setProjects((prevProjects) => {
       const updatedProjects = prevProjects.map((project) => {
-        if (project.name === "Tomorrow") {
+        if (project.name === "Today") {
           return { ...project, todos: updatedToDos };
         }
         return project;
       });
       localStorage.setItem("projects", JSON.stringify(updatedProjects));
-      updatedToDos.length;
+      setTodayCount(updatedToDos.length);
       return updatedProjects;
     });
   };
 
   const handleToDoDetails = (todo) => {
+    
     setTodoDetails(todo);
     setDetailsOpen(true);
   };
@@ -84,9 +82,11 @@ export function Tomorrow() {
     setDetailsOpen(false);
     setTodoDetails(null);
   };
+
   const handleCheckBoxChange = (index, todo) => {
-    markTodoAsCompleted(todo)
-    const updatedTodos = tomorrowToDos.map((todo, i) => {
+        markTodoAsCompleted(todo);
+
+    const updatedTodos = todayToDos.map((todo, i) => {
       if (i === index) {
         return { ...todo, completed: !todo.completed };
       }
@@ -95,7 +95,7 @@ export function Tomorrow() {
 
     setProjects((prevProjects) => {
       const updatedProjects = prevProjects.map((project) => {
-        if (project.name === "Tomorrow") {
+        if (project.name === "Today") {
           return { ...project, todos: updatedTodos };
         }
         return project;
@@ -104,7 +104,11 @@ export function Tomorrow() {
       return updatedProjects;
     });
     setCompletedToDos((prevCompletedToDos) => [...prevCompletedToDos, todo]);
-
+            
+    const completedCount = Array.isArray(completedToDos)
+      ? completedToDos.length
+      : 0;
+    setCompletedCount(completedCount);
     setSnackbarOpen(true);
   };
 
@@ -115,22 +119,23 @@ export function Tomorrow() {
   return (
     <div className="inboxTaskContainer">
       <div className="taskTitle">
-        <h2>Tomorrow</h2>
+        <h2>Today</h2>
       </div>
 
       <div className="taskContainer">
-        {Array.isArray(tomorrowToDos) &&
-          tomorrowToDos.map((todo, index) => {
+        {Array.isArray(todayToDos) &&
+          todayToDos.map((todo, index) => {
             const isCompleted = todo.completed;
-            const priorityColor = getPriorityColor(todo.priority);
+                      const priorityColor = getPriorityColor(todo.priority);
+
 
             return (
               <div key={index} className="taskItem">
                 <div className="taskContent">
                   <Checkbox
                     onClick={() => handleCheckBoxChange(index, todo)}
-                    checked={!!isCompleted}
-                    disabled={!!isCompleted}
+                    checked={isCompleted}
+                    disabled={isCompleted}
                     style={{ float: "left" }}
                   />
 
@@ -146,7 +151,11 @@ export function Tomorrow() {
                     {" "}
                     - {todo.priority}
                   </span>
-
+                  {isCompleted && (
+                    <span style={{ color: "green", marginLeft: "10px" }}>
+                      Task completed!
+                    </span>
+                  )}
 
                   <IconButton
                     onClick={() => handleOptionsClick(index)}
@@ -179,8 +188,8 @@ export function Tomorrow() {
               </div>
             );
           })}
+        <FormButton />
       </div>
-      <FormButton />
 
       {
         <TodoDetails

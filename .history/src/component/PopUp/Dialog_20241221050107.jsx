@@ -39,6 +39,8 @@ export default function FormDialog() {
     setTomorrowCount,
     thisWeekCount,
     setThisWeekCount,
+    completedCount,
+    setCompletedCount,
     selectedTodo,
   } = useContext(GeneralContext);
   const { projects, setProjects, setSelectedProjectName, selectedProjectName } =
@@ -66,7 +68,7 @@ export default function FormDialog() {
       dispatch({
         type: "Update_form_inputs",
         fieldName: "date",
-        fieldValue: new Date(selectedTodo.date),
+        fieldValue: selectedTodo.date,
       });
       dispatch({
         type: "Update_form_inputs",
@@ -86,8 +88,8 @@ export default function FormDialog() {
     }
   }, [selectedProjectName]);
 
+
   const handleClose = () => {
-    document.getElementById("root").removeAttribute("inert");
     setOpen(false);
   };
 
@@ -104,15 +106,11 @@ export default function FormDialog() {
   };
 
   const handleDateChange = (newDate) => {
-    if (newDate instanceof Date) {
-      dispatch({
-        type: "Update_form_inputs",
-        fieldName: "date",
-        fieldValue: newDate,
-      });
-    } else {
-      console.error("Invalid date value:", newDate);
-    }
+    dispatch({
+      type: "Update_form_inputs",
+      fieldName: "date",
+      fieldValue: newDate,
+    });
   };
 
   const handleClearForm = () => {
@@ -121,55 +119,28 @@ export default function FormDialog() {
     });
   };
 
-  // const handleSaveTodo = (updatedTodo) => {
-  //   setProjects((prevProjects) => {
-  //     const updatedProjects = prevProjects.map((project) => {
-  //       if (project.name === "Inbox") {
-  //         const updatedTodos = project.todos.map((todo) =>
-  //           todo === selectedTodo ? updatedTodo : todo
-  //         );
-  //         return { ...project, todos: updatedTodos };
-  //       } else if (project.name === "Today") {
-  //         const updatedTodos = project.todos.map((todo) =>
-  //           todo === selectedTodo ? updatedTodo : todo
-  //         );
-  //         return { ...project, todos: updatedTodos };
-  //       } else if (project.name === "Tomorrow") {
-  //         const updatedTodos = project.todos.map((todo) =>
-  //           todo === selectedTodo ? updatedTodo : todo
-  //         );
-  //         return { ...project, todos: updatedTodos };
-  //       } else if (project.name === "ThisWeek") {
-  //         const updatedTodos = project.todos.map((todo) =>
-  //           todo === selectedTodo ? updatedTodo : todo
-  //         );
-  //         return { ...project, todos: updatedTodos };
-  //       }
-  //       return project;
-  //     });
-
-  //     localStorage.setItem("projects", JSON.stringify(updatedProjects));
-  //     return updatedProjects;
-  //   });
-  //   setOpen(false);
-  // };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    const selectedProjectName = state.projectName || "Inbox";
-    setSelectedProjectName(selectedProjectName);
-
-    const newTodo = { ...state };
-
+  const handleSaveTodo = (updatedTodo) => {
     setProjects((prevProjects) => {
       const updatedProjects = prevProjects.map((project) => {
-        if (project.name === selectedProjectName) {
-          const updatedTodos = selectedTodo
-            ? project.todos.map((todo) =>
-                todo === selectedTodo ? newTodo : todo
-              )
-            : [...project.todos, newTodo];
+        if (project.name === "Inbox") {
+          const updatedTodos = project.todos.map((todo) =>
+            todo === selectedTodo ? updatedTodo : todo
+          );
+          return { ...project, todos: updatedTodos };
+        } else if (project.name === "Today") {
+          const updatedTodos = project.todos.map((todo) =>
+            todo === selectedTodo ? updatedTodo : todo
+          );
+          return { ...project, todos: updatedTodos };
+        } else if (project.name === "Tomorrow") {
+          const updatedTodos = project.todos.map((todo) =>
+            todo === selectedTodo ? updatedTodo : todo
+          );
+          return { ...project, todos: updatedTodos };
+        } else if (project.name === "ThisWeek") {
+          const updatedTodos = project.todos.map((todo) =>
+            todo === selectedTodo ? updatedTodo : todo
+          );
           return { ...project, todos: updatedTodos };
         }
         return project;
@@ -178,31 +149,84 @@ export default function FormDialog() {
       localStorage.setItem("projects", JSON.stringify(updatedProjects));
       return updatedProjects;
     });
+    setOpen(false);
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const selectedProjectName = state.projectName || "Inbox";
+    setSelectedProjectName(selectedProjectName);
+
+    const selectedProject = projects.find(
+      (project) => project.name === selectedProjectName
+    );
+
+    const newTodo = { ...state };
+
+    const updatedProjects = projects.map((project) => {
+      if (project.name === selectedProject.name) {
+        return { ...project, todos: [...project.todos, newTodo] };
+      }
+      return project;
+    });
 
     if (selectedProjectName === "Inbox") {
-      if (!selectedTodo) {
+      if (selectedTodo) {
+        handleSaveTodo(state);
+      } else {
+        setProjects(updatedProjects);
+        localStorage.setItem("projects", JSON.stringify(updatedProjects));
+
         setInboxCount(inboxCount + 1);
       }
     } else if (selectedProjectName === "Today") {
-      if (!selectedTodo) {
+      if (selectedTodo) {
+        handleSaveTodo(state);
+      } else {
+        setProjects(updatedProjects);
+        localStorage.setItem("projects", JSON.stringify(updatedProjects));
+
         setTodayCount(todayCount + 1);
       }
     } else if (selectedProjectName === "Tomorrow") {
-      if (!selectedTodo) {
+      if (selectedTodo) {
+        handleSaveTodo(state);
+      } else {
+        setProjects(updatedProjects);
+        localStorage.setItem("projects", JSON.stringify(updatedProjects));
+
         setTomorrowCount(tomorrowCount + 1);
       }
-    } else if (selectedProjectName === "Weekly") {
-      if (!selectedTodo) {
+    } else if (selectedProjectName === "ThisWeek") {
+      if (selectedTodo) {
+        handleSaveTodo(state);
+      } else {
+        setProjects(updatedProjects);
+        localStorage.setItem("projects", JSON.stringify(updatedProjects));
         setThisWeekCount(thisWeekCount + 1);
       }
+      console.log(todayCount);
     }
-
+     else {
+      if (selectedTodo) {
+        handleSaveTodo(state);
+      } else {
+        setProjects(updatedProjects);
+      }
+      if (!location.pathname.includes("/display/project")) {
+        navigate("/display/project");
+      }
+    }
     const convertedName =
       selectedProjectName.charAt(0).toLowerCase() +
       selectedProjectName.slice(1);
 
+
     if (
-      ["Inbox", "Today", "Tomorrow", "Weekly"].includes(selectedProjectName)
+      ["Inbox", "Today", "Tomorrow", "ThisWeek"].includes(
+        selectedProjectName
+      )
     ) {
       console.dir(convertedName, { depth: null });
       navigate(`/display/${convertedName}`);
@@ -288,7 +312,7 @@ export default function FormDialog() {
           <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DatePicker
               label="Due Date"
-              value={date instanceof Date && !isNaN(date) ? date : null}
+              value={date}
               onChange={handleDateChange}
               slotProps={{
                 textField: {

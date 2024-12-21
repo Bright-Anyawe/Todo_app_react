@@ -27,6 +27,7 @@ const NewProjectForm = () => {
   } = useContext(ProjectContext);
   const { setOpen } = useContext(GeneralContext);
 
+
   const handleProjectName = (e) => {
     const name = e.target.value;
     setProjectName(name);
