@@ -20,6 +20,7 @@
   h1.headerTextContent {
     font-size: 2.5em;
     line-height: 1.1;
+    color: white;
   }
 
   svg.arrow {
@@ -172,6 +173,7 @@
   h1.headerTextContent {
     font-size: 2.5em;
     line-height: 1.1;
+    color: white;
   }
 
   svg.arrow {

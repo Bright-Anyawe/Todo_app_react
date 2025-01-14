@@ -52,13 +52,14 @@ function App() {
   const markTodoAsCompleted = (todo) => {
     setCompletedToDos((prevCompletedToDos) => {
       const updatedTodos = [...prevCompletedToDos, todo];
-      localStorage.setItem("completedToDos", JSON.stringify(updatedTodos)); 
+      localStorage.setItem("completedToDos", JSON.stringify(updatedTodos));
       return updatedTodos;
     });
     setCompletedCount((prevCount) => prevCount + 1);
   };
 
   const arrowRef = useRef(null);
+
   const getPriorityColor = (priority) => {
     switch (priority) {
       case "low":
@@ -127,7 +128,6 @@ function App() {
             <Display />
           </ProjectContext.Provider>
         </GeneralContext.Provider>
-        {/* <Form /> */}
       </main>
     </>
   );
