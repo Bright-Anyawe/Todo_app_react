@@ -3,18 +3,18 @@ import PropTypes from "prop-types";
 import { Avatar, IconButton } from "@mui/material";
 import PersonIcon from "@mui/icons-material/Person";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../Context/ContextProvider";
+import { useContext } from "react";
 
-const Header = ({ toggleSidebar, isCollapsed, arrowRef, user }) => {
-  const [userImage, setUserImage] = useState(null);
+const Header = ({ toggleSidebar, isCollapsed, arrowRef }) => {
+  const {user} = useContext(AuthContext);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    if (user && user.image) {
-      setUserImage(user.image);
-    }
-  }, [user]);
+ 
 
   const displayLogin = () => {
+    console.log("Navigating to /login");
+
     navigate("/login");
   };
 
@@ -47,27 +47,24 @@ const Header = ({ toggleSidebar, isCollapsed, arrowRef, user }) => {
               <path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" />
             </svg>
           </div>
-
           <div
-            style={{ position: "absolute", top: "20px", right: "10px" }}
-            onClick={displayLogin}
-          >
-            <IconButton aria-label="Login">
-              {userImage ? (
-                <Avatar
-                  src={userImage}
-                  alt="User Icon"
-                  sx={{ width: 40, height: 40 }}
-                />
-              ) : (
-                <Avatar sx={{ width: 40, height: 40 }}>
-                  <PersonIcon />
-                </Avatar>
-              )}
-            </IconButton>
-
-           
-          </div>
+          style={{ position: "absolute", top: "20px", right: "10px" }}
+          onClick={displayLogin}
+        >
+          <IconButton aria-label="Login">
+            {user && user.photoURL ? (
+              <Avatar
+                src={user.photoURL}
+                alt={user.displayName || "User Icon"}
+                sx={{ width: 40, height: 40 }}
+              />
+            ) : (
+              <Avatar sx={{ width: 40, height: 40 }}>
+                <PersonIcon />
+              </Avatar>
+            )}
+          </IconButton>
+        </div>
         </div>
       </header>
     </>
