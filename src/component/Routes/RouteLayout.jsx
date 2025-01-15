@@ -1,4 +1,4 @@
-import App from "../Layout/App";
+import App from "../../App";
 import { Inbox } from "./Inbox";
 import { Tomorrow } from "./Tomorrow";
 import { ThisWeek } from "./Week";
@@ -6,24 +6,20 @@ import { Completed } from "./Completed";
 import Project from "./Project";
 import Display from "../Layout/Display";
 import { Today } from "./Today";
+import Login from "../../Auth/Login";
+import ErrorPage from "./ErrorPage.jsx";
 
 const routes = [
   {
     path: "/",
     element: <App />,
-
+    errorElement: <ErrorPage />, 
     children: [
       {
-        path: "display/:name",
+        path: "display",
         element: <Display />,
-
         children: [
-          {
-            index: true,
-            path: "inbox",
-            element: <Inbox />,
-          },
-
+          { index: true, path: "inbox", element: <Inbox /> },
           { path: "today", element: <Today /> },
           { path: "tomorrow", element: <Tomorrow /> },
           { path: "thisWeek", element: <ThisWeek /> },
@@ -31,6 +27,7 @@ const routes = [
           { path: "project", element: <Project /> },
         ],
       },
+      { path: "login", element: <Login /> }, 
     ],
   },
 ];

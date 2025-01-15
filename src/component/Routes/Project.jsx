@@ -1,4 +1,4 @@
-import { GeneralContext, ProjectContext } from "../Layout/App";
+import { GeneralContext, ProjectContext } from "../../Context/ContextProvider";
 import { useContext, useEffect } from "react";
 import { IconButton, Checkbox } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";

@@ -1,4 +1,4 @@
-import { GeneralContext, ProjectContext } from "../Layout/App";
+import { GeneralContext, ProjectContext } from "../../Context/ContextProvider";
 import { useContext } from "react";
 import { IconButton, Checkbox, Snackbar } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
@@ -9,6 +9,8 @@ import { useState } from "react";
 import { FormButton } from "../Button";
 import { TodoDetails } from "./TodoDetails";
 import { useEffect } from "react";
+import { db, doc, setDoc  } from "../../FireBase/FireBase";
+
 
 export function Inbox() {
   const {
@@ -60,9 +62,12 @@ export function Inbox() {
       });
       localStorage.setItem("projects", JSON.stringify(updatedProjects));
       setInboxCount(updatedTodos.length);
+      updateFirestore(updatedProjects);
       return updatedProjects;
     });
   };
+
+
   const handleToDoDetails = (todo) => {
     setTodoDetails(todo);
     setDetailsOpen(true);
@@ -99,6 +104,13 @@ export function Inbox() {
   
   const handleCloseSnackbar = () => {
     setSnackbarOpen(false);
+  };
+
+  const updateFirestore = async (updatedProjects) => {
+    if (user) {
+      const userDoc = doc(db, "users", user.uid);
+      await setDoc(userDoc, { projects: updatedProjects }, { merge: true });
+    }
   };
 
   return (

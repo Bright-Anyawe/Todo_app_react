@@ -18,7 +18,7 @@ import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { formReducer, initialState } from "../Layout/Reducers/FormReducer";
 import { useReducer } from "react";
 import { useContext } from "react";
-import { GeneralContext, ProjectContext } from "../Layout/App";
+import { GeneralContext, ProjectContext } from "../../Context/ContextProvider";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";

@@ -1,12 +1,12 @@
 import { useState } from "react";
-import Header from "./Header";
-import SideBar from "../SideBar";
-import Display from "./Display";
-import { createContext } from "react";
+import Header from "./component/Layout/Header";
+import SideBar from "./component/Layout/SideBar";
+import Display from "./component/Layout/Display";
 import { useEffect, useRef } from "react";
+import { AuthContext } from "./Context/ContextProvider";
+import { GeneralContext , ProjectContext} from "./Context/ContextProvider";
+import { db,  doc, setDoc, getDoc } from "./FireBase/FireBase";
 
-export const GeneralContext = createContext([]);
-export const ProjectContext = createContext([]);
 
 function App() {
   const [selectedTodo, setSelectedTodo] = useState(null);
@@ -31,6 +31,13 @@ function App() {
 
   const [completedToDos, setCompletedToDos] = useState([]);
 
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [userEmail, setUserEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [user, setUser] = useState(null);
+
+
   useEffect(() => {
     if (completedToDos && Array.isArray(completedToDos)) {
       localStorage.setItem("completedToDos", JSON.stringify(completedToDos));
@@ -48,6 +55,8 @@ function App() {
   const toggleSidebar = () => {
     setIsCollapsed((prev) => !prev);
   };
+
+  
 
   const markTodoAsCompleted = (todo) => {
     setCompletedToDos((prevCompletedToDos) => {
@@ -74,6 +83,29 @@ function App() {
         return "black";
     }
   };
+
+  useEffect(() => {
+    if (user) {
+      const saveProjects = async () => {
+        const userDoc = doc(db, "users", user.uid);
+        await setDoc(userDoc, { projects }, { merge: true });
+      };
+      saveProjects();
+    }
+  }, [projects, user]);
+
+  useEffect(() => {
+    if (user) {
+      const fetchProjects = async () => {
+        const userDoc = doc(db, "users", user.uid);
+        const userSnap = await getDoc(userDoc);
+        if (userSnap.exists()) {
+          setProjects(userSnap.data().projects);
+        }
+      };
+      fetchProjects();
+    }
+  }, [user]);
 
   return (
     <>
@@ -119,13 +151,28 @@ function App() {
               setSelectedProjectIndex,
             }}
           >
-            <Header
-              toggleSidebar={toggleSidebar}
-              isCollapsed={isCollapsed}
-              arrowRef={arrowRef}
-            />
-            <SideBar />
-            <Display />
+            <AuthContext.Provider
+              value={{
+                user, setUser,
+                userEmail,
+                setUserEmail,
+                password,
+                setPassword,
+                error,
+                setError,
+
+                isAuthenticated,
+                setIsAuthenticated,
+              }}
+            >
+              <Header
+                toggleSidebar={toggleSidebar}
+                isCollapsed={isCollapsed}
+                arrowRef={arrowRef}
+              />
+              <SideBar />
+              <Display />
+            </AuthContext.Provider>
           </ProjectContext.Provider>
         </GeneralContext.Provider>
       </main>

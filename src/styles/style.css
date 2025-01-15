@@ -314,8 +314,11 @@
 main header {
   grid-area: 1 / 1 / 2 / 4;
   background-color: rgb(19, 26, 41);
-      display: flex;
-    align-items: self-end;
+  display: flex;
+
+  align-items: center;
+  justify-content: space-around;
+  color: white;
 }
 
 div.taskContent {

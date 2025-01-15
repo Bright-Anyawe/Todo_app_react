@@ -1,8 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { useContext } from "react";
-import { GeneralContext } from "./Layout/App";
-import { ProjectContext } from "./Layout/App";
-import NewProjectForm from "./NewProjectForm";
+import { GeneralContext, ProjectContext } from "../../Context/ContextProvider";
+import NewProjectForm from "../NewProjectForm";
 import { useNavigate } from "react-router-dom";
 import { IconButton, Menu, MenuItem } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";

@@ -10,7 +10,7 @@ import {
 } from "@mui/material";
 
 import { useContext } from "react";
-import { GeneralContext, ProjectContext } from "./Layout/App";
+import { GeneralContext, ProjectContext } from "../Context/ContextProvider";
 import { useNavigate } from "react-router-dom";
 
 const NewProjectForm = () => {
