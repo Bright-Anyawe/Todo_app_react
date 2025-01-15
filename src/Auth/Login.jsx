@@ -17,7 +17,7 @@ function Login() {
   const signInWithGoogle = async () => {
     try {
    const result = await signInWithPopup(auth, googleProvider);
-   console.log(result);
+   console.log(result.user);
    const { displayName, email, photoURL } = result.user;
    setUser({ displayName, email, photoURL });
    

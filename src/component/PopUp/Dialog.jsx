@@ -121,39 +121,6 @@ export default function FormDialog() {
     });
   };
 
-  // const handleSaveTodo = (updatedTodo) => {
-  //   setProjects((prevProjects) => {
-  //     const updatedProjects = prevProjects.map((project) => {
-  //       if (project.name === "Inbox") {
-  //         const updatedTodos = project.todos.map((todo) =>
-  //           todo === selectedTodo ? updatedTodo : todo
-  //         );
-  //         return { ...project, todos: updatedTodos };
-  //       } else if (project.name === "Today") {
-  //         const updatedTodos = project.todos.map((todo) =>
-  //           todo === selectedTodo ? updatedTodo : todo
-  //         );
-  //         return { ...project, todos: updatedTodos };
-  //       } else if (project.name === "Tomorrow") {
-  //         const updatedTodos = project.todos.map((todo) =>
-  //           todo === selectedTodo ? updatedTodo : todo
-  //         );
-  //         return { ...project, todos: updatedTodos };
-  //       } else if (project.name === "ThisWeek") {
-  //         const updatedTodos = project.todos.map((todo) =>
-  //           todo === selectedTodo ? updatedTodo : todo
-  //         );
-  //         return { ...project, todos: updatedTodos };
-  //       }
-  //       return project;
-  //     });
-
-  //     localStorage.setItem("projects", JSON.stringify(updatedProjects));
-  //     return updatedProjects;
-  //   });
-  //   setOpen(false);
-  // };
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -216,9 +183,7 @@ export default function FormDialog() {
 
   return (
     <React.Fragment>
-      {/* <Button variant="outlined" onClick={handleOpen}>
-        Add Task
-      </Button> */}
+    
       <Dialog open={open} onClose={handleClose} role="dialog" aria-modal="true">
         <DialogTitle>
           {selectedTodo ? "Edit Task" : "Add a New Task"}

@@ -5,7 +5,8 @@ import Display from "./component/Layout/Display";
 import { useEffect, useRef } from "react";
 import { AuthContext } from "./Context/ContextProvider";
 import { GeneralContext , ProjectContext} from "./Context/ContextProvider";
-import { db,  doc, setDoc, getDoc } from "./FireBase/FireBase";
+import { db,  doc, setDoc, getDoc, auth } from "./FireBase/FireBase";
+import { onAuthStateChanged } from "firebase/auth";
 
 
 function App() {
@@ -83,6 +84,30 @@ function App() {
         return "black";
     }
   };
+
+  useEffect(() => {
+    // Listen for authentication state changes
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      if (currentUser) {
+        setUser(currentUser);
+
+        // Fetch user's projects from Firestore
+        const fetchProjects = async () => {
+          const userDoc = doc(db, "users", currentUser.uid);
+          const userSnap = await getDoc(userDoc);
+          if (userSnap.exists()) {
+            setProjects(userSnap.data().projects || []);
+          }
+        };
+        fetchProjects();
+      } else {
+        setUser(null);
+      }
+    });
+
+    // Cleanup subscription on unmount
+    return () => unsubscribe();
+  }, []);
 
   useEffect(() => {
     if (user) {

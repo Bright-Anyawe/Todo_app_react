@@ -8,18 +8,21 @@ import Display from "../Layout/Display";
 import { Today } from "./Today";
 import Login from "../../Auth/Login";
 import ErrorPage from "./ErrorPage.jsx";
+import { Navigate } from "react-router-dom";
 
 const routes = [
   {
     path: "/",
     element: <App />,
-    errorElement: <ErrorPage />, 
+    errorElement: <ErrorPage />,
     children: [
       {
         path: "display",
         element: <Display />,
         children: [
-          { index: true, path: "inbox", element: <Inbox /> },
+          { index: true, element: <Navigate to="inbox" replace /> },
+          { path: "inbox", element: <Inbox /> },
+
           { path: "today", element: <Today /> },
           { path: "tomorrow", element: <Tomorrow /> },
           { path: "thisWeek", element: <ThisWeek /> },
@@ -27,7 +30,7 @@ const routes = [
           { path: "project", element: <Project /> },
         ],
       },
-      { path: "login", element: <Login /> }, 
+      { path: "login", element: <Login /> },
     ],
   },
 ];
