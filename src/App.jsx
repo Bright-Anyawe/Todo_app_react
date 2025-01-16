@@ -4,10 +4,9 @@ import SideBar from "./component/Layout/SideBar";
 import Display from "./component/Layout/Display";
 import { useEffect, useRef } from "react";
 import { AuthContext } from "./Context/ContextProvider";
-import { GeneralContext , ProjectContext} from "./Context/ContextProvider";
-import { db,  doc, setDoc, getDoc, auth } from "./FireBase/FireBase";
+import { GeneralContext, ProjectContext } from "./Context/ContextProvider";
+import { db, doc, setDoc, getDoc, auth } from "./FireBase/FireBase";
 import { onAuthStateChanged } from "firebase/auth";
-
 
 function App() {
   const [selectedTodo, setSelectedTodo] = useState(null);
@@ -38,7 +37,6 @@ function App() {
   const [error, setError] = useState("");
   const [user, setUser] = useState(null);
 
-
   useEffect(() => {
     if (completedToDos && Array.isArray(completedToDos)) {
       localStorage.setItem("completedToDos", JSON.stringify(completedToDos));
@@ -56,8 +54,6 @@ function App() {
   const toggleSidebar = () => {
     setIsCollapsed((prev) => !prev);
   };
-
-  
 
   const markTodoAsCompleted = (todo) => {
     setCompletedToDos((prevCompletedToDos) => {
@@ -86,17 +82,22 @@ function App() {
   };
 
   useEffect(() => {
-    // Listen for authentication state changes
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
       if (currentUser) {
         setUser(currentUser);
 
-        // Fetch user's projects from Firestore
         const fetchProjects = async () => {
           const userDoc = doc(db, "users", currentUser.uid);
           const userSnap = await getDoc(userDoc);
           if (userSnap.exists()) {
             setProjects(userSnap.data().projects || []);
+          } else {
+            setProjects([
+              { name: "Inbox", todos: [] },
+              { name: "Today", todos: [] },
+              { name: "Tomorrow", todos: [] },
+              { name: "Weekly", todos: [] },
+            ]);
           }
         };
         fetchProjects();
@@ -105,7 +106,6 @@ function App() {
       }
     });
 
-    // Cleanup subscription on unmount
     return () => unsubscribe();
   }, []);
 
@@ -121,16 +121,26 @@ function App() {
 
   useEffect(() => {
     if (user) {
-      const fetchProjects = async () => {
+      const saveCounts = async () => {
         const userDoc = doc(db, "users", user.uid);
-        const userSnap = await getDoc(userDoc);
-        if (userSnap.exists()) {
-          setProjects(userSnap.data().projects);
-        }
+        await setDoc(
+          userDoc,
+          {
+            counts: {
+              inboxCount,
+              todayCount,
+              tomorrowCount,
+              thisWeekCount,
+              completedCount,
+            },
+          },
+          { merge: true }
+        );
       };
-      fetchProjects();
+      saveCounts();
     }
-  }, [user]);
+  }, [inboxCount, todayCount, tomorrowCount, thisWeekCount, completedCount, user]);
+  
 
   return (
     <>
@@ -178,7 +188,8 @@ function App() {
           >
             <AuthContext.Provider
               value={{
-                user, setUser,
+                user,
+                setUser,
                 userEmail,
                 setUserEmail,
                 password,

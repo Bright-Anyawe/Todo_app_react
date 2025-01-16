@@ -11,7 +11,6 @@ import {
   InputLabel,
   FormControl,
 } from "@mui/material";
-import { useState } from "react";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
@@ -21,11 +20,12 @@ import { useContext } from "react";
 import { GeneralContext, ProjectContext } from "../../Context/ContextProvider";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { AuthContext } from "../../Context/ContextProvider";
+import { db, doc, setDoc,  } from "../../FireBase/FireBase";
 
 export default function FormDialog() {
   const navigate = useNavigate();
-  const location = useLocation();
+  const { user} = useContext(AuthContext);
 
   const [state, dispatch] = useReducer(formReducer, initialState);
   const {
@@ -141,6 +141,11 @@ export default function FormDialog() {
         }
         return project;
       });
+
+      if (user) {
+        const userDoc = doc(db, "users", user.uid);
+        setDoc(userDoc, { projects: updatedProjects }, { merge: true });
+      }
 
       localStorage.setItem("projects", JSON.stringify(updatedProjects));
       return updatedProjects;
