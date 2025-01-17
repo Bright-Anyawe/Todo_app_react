@@ -40,7 +40,6 @@ header {
 }
 
 #displayContentContainer {
-  display: grid;
   grid-area: 2 / 2 / 4 / 4;
   color: black;
   background-color: white;
@@ -197,10 +196,10 @@ svg {
   z-index: 999;
   /* display: none; */
 }
-
+/* 
 form {
   border: 1px solid black;
-  width: 30vw;
+  width: 100%;
 }
 
 form label {
@@ -223,13 +222,19 @@ form input {
   background-color: whitesmoke;
   color: black;
 }
-
+ */
 .svgControl button {
   background-color: transparent;
 }
 
 .svgControl svg {
   width: 30px;
+}
+
+.bottomSection {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .inboxTaskContainer {

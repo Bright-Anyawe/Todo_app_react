@@ -8,8 +8,15 @@ import { AuthContext } from "../Context/ContextProvider";
 import { app } from "../FireBase/FireBase";
 
 function Login() {
-  const {  setUser, userEmail, setUserEmail, password, setPassword, error, setError } =
-    useContext(AuthContext);
+  const {
+    setUser,
+    userEmail,
+    setUserEmail,
+    password,
+    setPassword,
+    error,
+    setError,
+  } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const auth = getAuth(app);
@@ -28,7 +35,10 @@ function Login() {
     const handleRedirectResult = async () => {
       try {
         const result = await getRedirectResult(auth);
+        console.log("Redirect result:", result);
         if (result) {
+          // console.log("Redirect result:", result);
+
           const { displayName, email, photoURL } = result.user;
           setUser({ displayName, email, photoURL });
           navigate("/display/inbox");
@@ -55,6 +65,7 @@ function Login() {
           boxShadow: 3,
           textAlign: "center",
           width: "100%",
+          height: "fit-content",
         }}
       >
         <Typography
@@ -96,33 +107,38 @@ function Login() {
               {error}
             </Typography>
           )}
-          <Button
-            type="button"
-            fullWidth
-            variant="contained"
-            sx={{ mt: 2 }}
-            className="bg-blue-500 hover:bg-blue-700 text-white py-2 rounded"
-          >
-            Login
-          </Button>
-          <div className="flex justify-between text-sm text-gray-600 mt-2">
-            <a href="/signup" className="hover:underline">
-              Sign Up
-            </a>
-            <a href="/forgot-password" className="hover:underline">
-              Forgot Password?
-            </a>
+
+          <div className=" bottomSection flex flex-col items-center justify-center gap-10">
+            <Button
+              type="button"
+              fullWidth
+              variant="contained"
+              sx={{ mt: 2 }}
+              className="bg-blue-500 hover:bg-blue-700 text-white py-2 rounded"
+            >
+              Login
+            </Button>
+
+            <div className="flex justify-between text-sm text-gray-600 mt-2">
+              <a href="/signup" className="hover:underline">
+                Sign Up
+              </a>
+              <a href="/forgot-password" className="hover:underline">
+                Forgot Password?
+              </a>
+            </div>
+
+            {/* <hr className="my-4" /> */}
+            <Button
+              type="button"
+              fullWidth
+              variant="contained"
+              className="bg-red-500 hover:bg-red-600 text-white py-2 rounded"
+              onClick={signInWithGoogle}
+            >
+              Login with Google
+            </Button>
           </div>
-          <hr className="my-4" />
-          <Button
-            type="button"
-            fullWidth
-            variant="contained"
-            className="bg-red-500 hover:bg-red-600 text-white py-2 rounded"
-            onClick={signInWithGoogle}
-          >
-            Login with Google
-          </Button>
         </Box>
       </Box>
     </Container>

@@ -4,6 +4,8 @@ export default {
       cssnano: {
         preset: 'default',
       },
+      tailwindcss: {},
+      autoprefixer: {},
     },
   };
   
