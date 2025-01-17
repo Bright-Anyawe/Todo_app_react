@@ -1,5 +1,6 @@
 import { useContext } from "react";
-import { signInWithPopup } from "firebase/auth";
+import { signInWithRedirect, getRedirectResult } from "firebase/auth";
+import { useEffect } from "react";
 import { TextField, Button, Container, Typography, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { getAuth, GoogleAuthProvider } from "firebase/auth";
@@ -16,20 +17,29 @@ function Login() {
 
   const signInWithGoogle = async () => {
     try {
-   const result = await signInWithPopup(auth, googleProvider);
-   console.log(result.user);
-   const { displayName, email, photoURL } = result.user;
-   setUser({ displayName, email, photoURL });
-   
-   
-   navigate("/display/inbox");
+      await signInWithRedirect(auth, googleProvider);
     } catch (error) {
       console.error("Error signing in:", error);
       setError(error.message);
     }
-    setUserEmail("");
-    setPassword("");
   };
+
+  useEffect(() => {
+    const handleRedirectResult = async () => {
+      try {
+        const result = await getRedirectResult(auth);
+        if (result) {
+          const { displayName, email, photoURL } = result.user;
+          setUser({ displayName, email, photoURL });
+          navigate("/display/inbox");
+        }
+      } catch (error) {
+        console.error("Error handling redirect result:", error);
+        setError(error.message);
+      }
+    };
+    handleRedirectResult();
+  }, [auth, navigate, setUser, setError]);
 
   return (
     <Container
