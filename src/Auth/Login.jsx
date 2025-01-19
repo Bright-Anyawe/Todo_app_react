@@ -1,11 +1,14 @@
 import { useContext } from "react";
-import { signInWithRedirect, getRedirectResult } from "firebase/auth";
+import { signInWithRedirect, signInWithPopup, getRedirectResult } from "firebase/auth";
 import { useEffect } from "react";
 import { TextField, Button, Container, Typography, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import { getAuth, GoogleAuthProvider } from "firebase/auth";
+import {  GoogleAuthProvider } from "firebase/auth";
 import { AuthContext } from "../Context/ContextProvider";
-import { app } from "../FireBase/FireBase";
+import { onAuthStateChanged } from "firebase/auth";
+
+// import { app } from "../FireBase/FireBase";
+import { auth } from "../FireBase/FireBase";
 
 function Login() {
   const {
@@ -19,37 +22,51 @@ function Login() {
   } = useContext(AuthContext);
   const navigate = useNavigate();
 
-  const auth = getAuth(app);
   const googleProvider = new GoogleAuthProvider();
 
   const signInWithGoogle = async () => {
     try {
-      await signInWithRedirect(auth, googleProvider);
+      const result = await signInWithPopup(auth, googleProvider);
+      const { displayName, email, photoURL } = result.user;
+      console.log("User signed in via popup:", { displayName, email, photoURL });
+      setUser({ displayName, email, photoURL });
+      navigate("/display/inbox");
     } catch (error) {
-      console.error("Error signing in:", error);
-      setError(error.message);
+      if (error.code === "auth/popup-blocked") {
+        console.warn("Popup blocked. Falling back to redirect...");
+        await signInWithRedirect(auth, googleProvider);
+      } else {
+        console.error("Error signing in:", error.message);
+        setError(error.message);
+      }
     }
   };
+  
 
   useEffect(() => {
-    const handleRedirectResult = async () => {
+    const fetchRedirectResult = async () => {
       try {
         const result = await getRedirectResult(auth);
         console.log("Redirect result:", result);
+        console.log(window.location.href)
+  
         if (result) {
-          // console.log("Redirect result:", result);
-
           const { displayName, email, photoURL } = result.user;
+          console.log("User details:", { displayName, email, photoURL });
           setUser({ displayName, email, photoURL });
           navigate("/display/inbox");
+
+        } else {
+          console.log("No redirect result available.");
         }
       } catch (error) {
-        console.error("Error handling redirect result:", error);
-        setError(error.message);
+        console.error("Error fetching redirect result:", error.message);
       }
     };
-    handleRedirectResult();
-  }, [auth, navigate, setUser, setError]);
+  
+    fetchRedirectResult();
+  }, [setUser, setError, navigate]);
+  
 
   return (
     <Container
