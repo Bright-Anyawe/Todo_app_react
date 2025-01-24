@@ -1,9 +1,13 @@
 import { useContext } from "react";
-import { signInWithRedirect, signInWithPopup, getRedirectResult } from "firebase/auth";
+import {
+  signInWithRedirect,
+  signInWithPopup,
+  getRedirectResult,
+} from "firebase/auth";
 import { useEffect } from "react";
 import { TextField, Button, Container, Typography, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import {  GoogleAuthProvider } from "firebase/auth";
+import { GoogleAuthProvider } from "firebase/auth";
 import { AuthContext } from "../Context/ContextProvider";
 import { onAuthStateChanged } from "firebase/auth";
 
@@ -28,12 +32,11 @@ function Login() {
     try {
       const result = await signInWithPopup(auth, googleProvider);
       const { displayName, email, photoURL } = result.user;
-      console.log("User signed in via popup:", { displayName, email, photoURL });
       setUser({ displayName, email, photoURL });
       navigate("/display/inbox");
     } catch (error) {
       if (error.code === "auth/popup-blocked") {
-        console.warn("Popup blocked. Falling back to redirect...");
+        // console.warn("Popup blocked. Falling back to redirect...");
         await signInWithRedirect(auth, googleProvider);
       } else {
         console.error("Error signing in:", error.message);
@@ -41,32 +44,28 @@ function Login() {
       }
     }
   };
-  
 
   useEffect(() => {
     const fetchRedirectResult = async () => {
       try {
         const result = await getRedirectResult(auth);
-        console.log("Redirect result:", result);
-        console.log(window.location.href)
-  
+    
+
         if (result) {
           const { displayName, email, photoURL } = result.user;
           console.log("User details:", { displayName, email, photoURL });
           setUser({ displayName, email, photoURL });
           navigate("/display/inbox");
-
         } else {
-          console.log("No redirect result available.");
+          // console.log("No redirect result available.");
         }
       } catch (error) {
         console.error("Error fetching redirect result:", error.message);
       }
     };
-  
+
     fetchRedirectResult();
   }, [setUser, setError, navigate]);
-  
 
   return (
     <Container
@@ -136,14 +135,14 @@ function Login() {
               Login
             </Button>
 
-            <div className="flex justify-between text-sm text-gray-600 mt-2">
+            {/* <div className="flex justify-between text-sm text-gray-600 mt-2">
               <a href="/signup" className="hover:underline">
                 Sign Up
               </a>
               <a href="/forgot-password" className="hover:underline">
                 Forgot Password?
               </a>
-            </div>
+            </div> */}
 
             {/* <hr className="my-4" /> */}
             <Button

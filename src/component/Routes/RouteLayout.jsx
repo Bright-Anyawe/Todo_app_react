@@ -1,20 +1,25 @@
-import App from "../../App";
+import Dashboard from "../../App";
 import { Inbox } from "./Inbox";
-import { Tomorrow } from "./Tomorrow";
-import { ThisWeek } from "./Week";
+import { Monday } from "./Monday.jsx";
+import { Tuesday } from "./Tuesday.jsx";
 import { Completed } from "./Completed";
 import Project from "./Project";
 import Display from "../Layout/Display";
-import { Today } from "./Today";
+import { Sunday } from "./Sunday.jsx";
 import Login from "../../Auth/Login";
 import ErrorPage from "./ErrorPage.jsx";
 import { Navigate } from "react-router-dom";
 
 const routes = [
+  // {
+  //   path: "/",
+  //   element: <Navigate to="/display" replace />, 
+  // },
   {
-    path: "/",
-    element: <App />,
+    path: "/dashboard",
+    element: <Dashboard />,
     errorElement: <ErrorPage />,
+    
     children: [
       {
         path: "display",
@@ -23,9 +28,9 @@ const routes = [
           { index: true, element: <Navigate to="inbox" replace /> },
           { path: "inbox", element: <Inbox /> },
 
-          { path: "today", element: <Today /> },
-          { path: "tomorrow", element: <Tomorrow /> },
-          { path: "thisWeek", element: <ThisWeek /> },
+          { path: "sunday", element: <Sunday /> },
+          { path: "monday", element: <Monday /> },
+          { path: "tuesday", element: <Tuesday /> },
           { path: "completed", element: <Completed /> },
           { path: "project", element: <Project /> },
         ],

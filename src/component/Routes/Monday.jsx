@@ -9,12 +9,12 @@ import { useState, useEffect } from "react";
 import { TodoDetails } from "./TodoDetails";
 import { FormButton } from "../Button";
 
-export function Tomorrow() {
+export function Monday() {
   const {
     setOpen,
     setSelectedTodo,
     setCompletedToDos,
-    setTomorrowCount,
+    setMondayCount,
     getPriorityColor,
     markTodoAsCompleted,
   } = useContext(GeneralContext);
@@ -25,7 +25,7 @@ export function Tomorrow() {
   const [todoDetails, setTodoDetails] = useState(null);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
-  const tomorrowToDos =
+  const mondayToDos =
     projects.find((project) => project?.name === "Tomorrow")?.todos || [];
 
   useEffect(() => {
@@ -43,10 +43,10 @@ export function Tomorrow() {
       setProjects(updatedProjects);
       localStorage.setItem("projects", JSON.stringify(updatedProjects));
 
-      const tomorrowToDos =
-        updatedProjects.find((project) => project?.name === "Tomorrow")
+      const mondayToDos =
+        updatedProjects.find((project) => project?.name === "Monday")
           ?.todos || [];
-      setTomorrowCount(tomorrowToDos.length);
+          setMondayCount(mondayToDos.length);
     }
   }, []);
 
@@ -60,11 +60,11 @@ export function Tomorrow() {
   };
 
   const handleDelete = (index) => {
-    const updatedToDos = tomorrowToDos.filter((_, i) => i !== index);
+    const updatedToDos = mondayToDos.filter((_, i) => i !== index);
 
     setProjects((prevProjects) => {
       const updatedProjects = prevProjects.map((project) => {
-        if (project.name === "Tomorrow") {
+        if (project.name === "Monday") {
           return { ...project, todos: updatedToDos };
         }
         return project;
@@ -86,7 +86,7 @@ export function Tomorrow() {
   };
   const handleCheckBoxChange = (index, todo) => {
     markTodoAsCompleted(todo)
-    const updatedTodos = tomorrowToDos.map((todo, i) => {
+    const updatedTodos = mondayToDos.map((todo, i) => {
       if (i === index) {
         return { ...todo, completed: !todo.completed };
       }
@@ -95,7 +95,7 @@ export function Tomorrow() {
 
     setProjects((prevProjects) => {
       const updatedProjects = prevProjects.map((project) => {
-        if (project.name === "Tomorrow") {
+        if (project.name === "Monday") {
           return { ...project, todos: updatedTodos };
         }
         return project;
@@ -115,12 +115,12 @@ export function Tomorrow() {
   return (
     <div className="inboxTaskContainer">
       <div className="taskTitle">
-        <h2>Tomorrow</h2>
+        <h2>Monday</h2>
       </div>
 
       <div className="taskContainer">
-        {Array.isArray(tomorrowToDos) &&
-          tomorrowToDos.map((todo, index) => {
+        {Array.isArray(mondayToDos) &&
+          mondayToDos.map((todo, index) => {
             const isCompleted = todo.completed;
             const priorityColor = getPriorityColor(todo.priority);
 

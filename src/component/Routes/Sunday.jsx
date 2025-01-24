@@ -10,13 +10,13 @@ import { FormButton } from "../Button";
 import { TodoDetails } from "./TodoDetails";
 import { useEffect } from "react";
 
-export function Today() {
+export function Sunday() {
   const {
     setOpen,
     setSelectedTodo,
     completedToDos,
     setCompletedToDos,
-    setTodayCount,
+    setSundayCount,
     setCompletedCount,
     getPriorityColor,
     markTodoAsCompleted,
@@ -28,18 +28,18 @@ export function Today() {
   const [todoDetails, setTodoDetails] = useState(null);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
-  const todayToDos =
-    projects.find((project) => project?.name === "Today")?.todos || [];
+  const sundayTodos =
+    projects.find((project) => project?.name === "Sunday")?.todos || [];
 
   useEffect(() => {
     const storedProjects = JSON.parse(localStorage.getItem("projects"));
     if (storedProjects && storedProjects.length) {
       setProjects(storedProjects);
-      const todayToDos =
+      const sundayTodos =
         storedProjects.find((project) => project?.name === "Today")?.todos ||
         [];
-      const todayCount = Array.isArray(todayToDos) ? todayToDos.length : 0;
-      setTodayCount(todayCount);
+      const sundayCount = Array.isArray(sundayTodos) ? sundayTodos.length : 0;
+      setSundayCount(sundayCount);
     }
   }, []);
 
@@ -53,7 +53,7 @@ export function Today() {
   };
 
   const handleDelete = (index) => {
-    const updatedToDos = todayToDos.filter((_, i) => i !== index);
+    const updatedToDos = sundayTodos.filter((_, i) => i !== index);
 
     setProjects((prevProjects) => {
       const updatedProjects = prevProjects.map((project) => {
@@ -63,7 +63,7 @@ export function Today() {
         return project;
       });
       localStorage.setItem("projects", JSON.stringify(updatedProjects));
-      setTodayCount(updatedToDos.length);
+      setSundayCount(updatedToDos.length);
       return updatedProjects;
     });
   };
@@ -84,7 +84,7 @@ export function Today() {
   const handleCheckBoxChange = (index, todo) => {
     markTodoAsCompleted(todo);
 
-    const updatedTodos = todayToDos.map((todo, i) => {
+    const updatedTodos = sundayTodos.map((todo, i) => {
       if (i === index) {
         return { ...todo, completed: !todo.completed };
       }
@@ -117,12 +117,12 @@ export function Today() {
   return (
     <div className="inboxTaskContainer">
       <div className="taskTitle">
-        <h2>Today</h2>
+        <h2>Sunday</h2>
       </div>
 
       <div className="taskContainer">
-        {Array.isArray(todayToDos) &&
-          todayToDos.map((todo, index) => {
+        {Array.isArray(sundayTodos) &&
+          sundayTodos.map((todo, index) => {
             const isCompleted = todo.completed;
             const priorityColor = getPriorityColor(todo.priority);
 

@@ -8,22 +8,22 @@ import { GeneralContext, ProjectContext } from "./Context/ContextProvider";
 import { db, doc, setDoc, getDoc, auth } from "./FireBase/FireBase";
 import { onAuthStateChanged } from "firebase/auth";
 
-function App() {
+function Dashboard() {
   const [selectedTodo, setSelectedTodo] = useState(null);
 
   const [inboxCount, setInboxCount] = useState(0);
-  const [todayCount, setTodayCount] = useState(0);
-  const [tomorrowCount, setTomorrowCount] = useState(0);
-  const [thisWeekCount, setThisWeekCount] = useState(0);
+  const [sundayCount, setSundayCount] = useState(0);
+  const [mondayCount, setMondayCount] = useState(0);
+  const [tuesdayCount, setTuesdayCount] = useState(0);
   const [completedCount, setCompletedCount] = useState(0);
 
   const [open, setOpen] = useState(false);
   const [OpenProjectForm, setOpenProjectForm] = useState(false);
   const [projects, setProjects] = useState([
     { name: "Inbox", todos: [] },
-    { name: "Today", todos: [] },
-    { name: "Tomorrow", todos: [] },
-    { name: "Weekly", todos: [] },
+    { name: "sunday", todos: [] },
+    { name: "monday", todos: [] },
+    { name: "tuesday", todos: [] },
   ]);
   const [projectName, setProjectName] = useState("");
   const [selectedProjectName, setSelectedProjectName] = useState("");
@@ -139,8 +139,14 @@ function App() {
       };
       saveCounts();
     }
-  }, [inboxCount, todayCount, tomorrowCount, thisWeekCount, completedCount, user]);
-  
+  }, [
+    inboxCount,
+    todayCount,
+    tomorrowCount,
+    thisWeekCount,
+    completedCount,
+    user,
+  ]);
 
   return (
     <>
@@ -151,12 +157,12 @@ function App() {
             setOpen,
             inboxCount,
             setInboxCount,
-            todayCount,
-            setTodayCount,
-            tomorrowCount,
-            setTomorrowCount,
-            thisWeekCount,
-            setThisWeekCount,
+            sundayCount,
+            setSundayCount,
+            mondayCount,
+            setMondayCount,
+            tuesdayCount,
+            setTuesdayCount,
             completedCount,
             setCompletedCount,
             selectedTodo,
@@ -216,4 +222,4 @@ function App() {
   );
 }
 
-export default App;
+export default Dashboard;

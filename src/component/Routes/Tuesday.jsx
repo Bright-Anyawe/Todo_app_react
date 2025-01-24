@@ -9,12 +9,12 @@ import { useState, useEffect } from "react";
 import { TodoDetails } from "./TodoDetails";
 import { FormButton } from "../Button";
 
-export function ThisWeek() {
+export function Tuesday() {
   const {
     setOpen,
     setSelectedTodo,
     setCompletedToDos,
-    setThisWeekCount,
+    setTuesdayCount,
     getPriorityColor,
     markTodoAsCompleted,
   } = useContext(GeneralContext);
@@ -25,9 +25,9 @@ export function ThisWeek() {
   const [todoDetails, setTodoDetails] = useState(null);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
-  const thisWeekToDos =
-    projects.find((project) => project?.name === "ThisWeek")?.todos || [];
-  console.dir(thisWeekToDos, { depth: null });
+  const tuesdayToDos =
+    projects.find((project) => project?.name === "Tuesday")?.todos || [];
+  console.dir(tuesdayToDos, { depth: null });
 
   // useEffect(() => {
   //   const storedProjects = JSON.parse(localStorage.getItem("projects"));
@@ -44,27 +44,27 @@ export function ThisWeek() {
   //   }
   // }, []);
 
-    useEffect(() => {
-      const storedProjects = JSON.parse(localStorage.getItem("projects"));
-      if (storedProjects && storedProjects.length) {
-        const updatedProjects = storedProjects.map((project) => {
-          if (project.name === "Weekly") {
-            project.todos = project.todos.map((todo) => ({
-              ...todo,
-              completed: todo.completed ?? false,
-            }));
-          }
-          return project;
-        });
-        setProjects(updatedProjects);
-        localStorage.setItem("projects", JSON.stringify(updatedProjects));
+  useEffect(() => {
+    const storedProjects = JSON.parse(localStorage.getItem("projects"));
+    if (storedProjects && storedProjects.length) {
+      const updatedProjects = storedProjects.map((project) => {
+        if (project.name === "Tuesday") {
+          project.todos = project.todos.map((todo) => ({
+            ...todo,
+            completed: todo.completed ?? false,
+          }));
+        }
+        return project;
+      });
+      setProjects(updatedProjects);
+      localStorage.setItem("projects", JSON.stringify(updatedProjects));
 
-        const thisWeekCount =
-          updatedProjects.find((project) => project?.name === "Weekly")
-            ?.todos || [];
-        setThisWeekCount(thisWeekCount.length);
-      }
-    }, []);
+      const thisWeekCount =
+        updatedProjects.find((project) => project?.name === "Tuesday")?.todos ||
+        [];
+      setTuesdayCount(thisWeekCount.length);
+    }
+  }, []);
 
   const handleOptionsClick = (index) => {
     setShowOptions(showOptions === index ? null : index);
@@ -76,18 +76,18 @@ export function ThisWeek() {
   };
 
   const handleDelete = (index) => {
-    const updatedToDos = thisWeekToDos.filter((_, i) => i !== index);
+    const updatedToDos = tuesdayToDos.filter((_, i) => i !== index);
 
     setProjects((prevProjects) => {
       const updatedProjects = prevProjects.map((project) => {
-        if (project.name === "Weekly") {
+        if (project.name === "Tuesday") {
           return { ...project, todos: updatedToDos };
         }
         return project;
       });
       localStorage.setItem("projects", JSON.stringify(updatedProjects));
 
-      setThisWeekCount(updatedToDos.length);
+      setTuesdayCount(updatedToDos.length);
       return updatedProjects;
     });
   };
@@ -103,8 +103,8 @@ export function ThisWeek() {
   };
 
   const handleCheckBoxChange = (index, todo) => {
-    markTodoAsCompleted(todo)
-    const updatedTodos = thisWeekToDos.map((todo, i) => {
+    markTodoAsCompleted(todo);
+    const updatedTodos = tuesdayToDos.map((todo, i) => {
       if (i === index) {
         return { ...todo, completed: !todo.completed };
       }
@@ -113,7 +113,7 @@ export function ThisWeek() {
 
     setProjects((prevProjects) => {
       const updatedProjects = prevProjects.map((project) => {
-        if (project.name === "Weekly") {
+        if (project.name === "Tuesday") {
           return { ...project, todos: updatedTodos };
         }
         return project;
@@ -133,12 +133,12 @@ export function ThisWeek() {
   return (
     <div className="inboxTaskContainer">
       <div className="taskTitle">
-        <h2>Weekly</h2>
+        <h2>Tuesday</h2>
       </div>
 
       <div className="taskContainer">
-        {Array.isArray(thisWeekToDos) &&
-          thisWeekToDos.map((todo, index) => {
+        {Array.isArray(tuesdayToDos) &&
+          tuesdayToDos.map((todo, index) => {
             const isCompleted = todo.completed || false;
             const priorityColor = getPriorityColor(todo.priority);
 
@@ -164,7 +164,7 @@ export function ThisWeek() {
                     {" "}
                     - {todo.priority}
                   </span>
-               
+
                   <IconButton
                     onClick={() => handleOptionsClick(index)}
                     style={{ marginLeft: "auto" }}

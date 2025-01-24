@@ -1,5 +1,5 @@
 import { GeneralContext, ProjectContext } from "../../Context/ContextProvider";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { IconButton, Checkbox } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import EditIcon from "@mui/icons-material/Edit";
@@ -34,7 +34,7 @@ export default function Project() {
     (proj) =>
       proj.name === selectedProjectName &&
       proj.name !== "Inbox" &&
-      proj.name !== "Today"
+      proj.name !== "Sunday"
   );
   const projectToDos = project ? project.todos : [];
 

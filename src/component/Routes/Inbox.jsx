@@ -9,7 +9,7 @@ import { useState } from "react";
 import { FormButton } from "../Button";
 import { TodoDetails } from "./TodoDetails";
 import { useEffect } from "react";
-import { db, doc, setDoc  } from "../../FireBase/FireBase";
+// import { db, doc, setDoc  } from "../../FireBase/FireBase";
 
 
 export function Inbox() {
@@ -62,7 +62,7 @@ export function Inbox() {
       });
       localStorage.setItem("projects", JSON.stringify(updatedProjects));
       setInboxCount(updatedTodos.length);
-      updateFirestore(updatedProjects);
+      // updateFirestore(updatedProjects);
       return updatedProjects;
     });
   };
@@ -106,12 +106,12 @@ export function Inbox() {
     setSnackbarOpen(false);
   };
 
-  const updateFirestore = async (updatedProjects) => {
-    if (user) {
-      const userDoc = doc(db, "users", user.uid);
-      await setDoc(userDoc, { projects: updatedProjects }, { merge: true });
-    }
-  };
+  // const updateFirestore = async (updatedProjects) => {
+  //   if (user) {
+  //     const userDoc = doc(db, "users", user.uid);
+  //     await setDoc(userDoc, { projects: updatedProjects }, { merge: true });
+  //   }
+  // };
 
   return (
     <div className="inboxTaskContainer">
