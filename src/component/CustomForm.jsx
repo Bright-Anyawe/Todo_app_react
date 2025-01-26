@@ -1,5 +1,9 @@
 import * as React from "react";
-import { useEffect } from "react";
+import { useContext } from "react";
+import { AuthContext } from "../Context/ContextProvider";
+
+import { db, doc, setDoc } from "../FireBase/FireBase";
+
 import {
   Dialog,
   DialogActions,
@@ -9,16 +13,15 @@ import {
   TextField,
 } from "@mui/material";
 
-import { useContext } from "react";
 import { GeneralContext, ProjectContext } from "../Context/ContextProvider";
 import { useNavigate } from "react-router-dom";
 
 const NewProjectForm = () => {
   const navigate = useNavigate();
+  const { user } = useContext(AuthContext);
   const {
     OpenProjectForm,
     setOpenProjectForm,
-    projects,
     setProjects,
     projectName,
     setProjectName,
@@ -48,7 +51,12 @@ const NewProjectForm = () => {
             ? { ...project, name: projectName }
             : project
         );
-        localStorage.setItem("projects", JSON.stringify(updatedProjects));
+        if (user) {
+          const userDoc = doc(db, "users", user.uid);
+          setDoc(userDoc, { projects: updatedProjects }, { merge: true });
+        } else {
+          localStorage.setItem("projects", JSON.stringify(updatedProjects));
+        }
         return updatedProjects;
       });
     } else {

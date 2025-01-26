@@ -27,10 +27,18 @@ export function Inbox() {
   const [todoDetails, setTodoDetails] = useState(null);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
-  const inboxToDos =
+  // useEffect(() => {
+  //   const storedProjects = JSON.parse(localStorage.getItem("projects"));
+  //   if (storedProjects && storedProjects.length) {
+  //     setProjects(storedProjects);
+  //   }
+  // }, []);
+  
+
+  let inboxToDos =
     projects.find((project) => project?.name === "Inbox")?.todos || [];
 
-  useEffect(() => {
+  useEffect(() => {  
     const storedProjects = JSON.parse(localStorage.getItem("projects"));
     if (storedProjects && storedProjects.length) {
       setProjects(storedProjects);
@@ -123,6 +131,8 @@ export function Inbox() {
         {inboxToDos.map((todo, index) => {
           const isCompleted = todo.completed || false;
           const priorityColor = getPriorityColor(todo.priority);
+
+          
           return (
             <div key={index} className="taskItem">
               <div className="taskContent">

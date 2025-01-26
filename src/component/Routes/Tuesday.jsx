@@ -27,7 +27,6 @@ export function Tuesday() {
 
   const tuesdayToDos =
     projects.find((project) => project?.name === "Tuesday")?.todos || [];
-  console.dir(tuesdayToDos, { depth: null });
 
   // useEffect(() => {
   //   const storedProjects = JSON.parse(localStorage.getItem("projects"));
@@ -59,10 +58,10 @@ export function Tuesday() {
       setProjects(updatedProjects);
       localStorage.setItem("projects", JSON.stringify(updatedProjects));
 
-      const thisWeekCount =
+      const tuesdayCount =
         updatedProjects.find((project) => project?.name === "Tuesday")?.todos ||
         [];
-      setTuesdayCount(thisWeekCount.length);
+      setTuesdayCount(tuesdayCount.length);
     }
   }, []);
 

@@ -1,14 +1,24 @@
-import { Avatar, IconButton, Menu, MenuItem, Snackbar, Alert } from "@mui/material";
+import {
+  Avatar,
+  IconButton,
+  Menu,
+  MenuItem,
+  Snackbar,
+  Alert,
+} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/ContextProvider";
 import PersonIcon from "@mui/icons-material/Person";
 import { useMediaQuery } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
-import { useContext,useState } from "react";
-
+import { useContext, useState } from "react";
+import { signOut } from "firebase/auth";
+import { auth } from "../../FireBase/FireBase";
+import { ProjectContext } from "../../Context/ContextProvider";
 
 const AuthIcon = () => {
-  const { user, setUser } = useContext(AuthContext);
+  const { user, setUser,setIsAuthenticated } = useContext(AuthContext);
+  const { projects } = useContext(ProjectContext);
   const navigate = useNavigate();
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -17,7 +27,7 @@ const AuthIcon = () => {
 
   const isMenuOpen = Boolean(anchorEl);
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm")); // Check if it's mobile screen size
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm")); 
 
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -32,11 +42,18 @@ const AuthIcon = () => {
     navigate("/login");
   };
 
-  const handleLogout = () => {
-    setUser(null); // Clear user authentication
-    setAnchorEl(null); // Close the menu
+  const handleLogout = async () => {
+    if (projects.length) {
+      localStorage.setItem("projects", JSON.stringify(projects));
+    }
+
+    await signOut(auth);
+    setUser(null);
+    setIsAuthenticated(false);
+
+    setAnchorEl(null);
     setSnackbarMessage("Successfully logged out!");
-    setSnackbarOpen(true); // Show snackbar
+    setSnackbarOpen(true);
   };
 
   const handleSnackbarClose = () => {

@@ -26,7 +26,7 @@ export function Monday() {
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
   const mondayToDos =
-    projects.find((project) => project?.name === "Tomorrow")?.todos || [];
+    projects.find((project) => project?.name === "Monday")?.todos || [];
 
   useEffect(() => {
     const storedProjects = JSON.parse(localStorage.getItem("projects"));

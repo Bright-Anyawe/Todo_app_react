@@ -21,11 +21,11 @@ import { GeneralContext, ProjectContext } from "../../Context/ContextProvider";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/ContextProvider";
-import { db, doc, setDoc,  } from "../../FireBase/FireBase";
+import { db, doc, setDoc } from "../../FireBase/FireBase";
 
 export default function FormDialog() {
   const navigate = useNavigate();
-  const { user} = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
 
   const [state, dispatch] = useReducer(formReducer, initialState);
   const {
@@ -33,12 +33,12 @@ export default function FormDialog() {
     setOpen,
     inboxCount,
     setInboxCount,
-    todayCount,
-    setTodayCount,
-    tomorrowCount,
-    setTomorrowCount,
-    thisWeekCount,
-    setThisWeekCount,
+    sundayCount,
+    setSundayCount,
+    mondayCount,
+    setMondayCount,
+    tuesdayCount,
+    setTuesdaysCount,
     selectedTodo,
   } = useContext(GeneralContext);
   const { projects, setProjects, setSelectedProjectName, selectedProjectName } =
@@ -145,27 +145,29 @@ export default function FormDialog() {
       if (user) {
         const userDoc = doc(db, "users", user.uid);
         setDoc(userDoc, { projects: updatedProjects }, { merge: true });
+      } else {
+        localStorage.setItem("projects", JSON.stringify(updatedProjects));
       }
 
-      localStorage.setItem("projects", JSON.stringify(updatedProjects));
       return updatedProjects;
     });
 
     if (selectedProjectName === "Inbox") {
+      console.log(selectedProjectName);
       if (!selectedTodo) {
         setInboxCount(inboxCount + 1);
       }
-    } else if (selectedProjectName === "Today") {
+    } else if (selectedProjectName === "Sunday") {
       if (!selectedTodo) {
-        setTodayCount(todayCount + 1);
+        setSundayCount(sundayCount + 1);
       }
-    } else if (selectedProjectName === "Tomorrow") {
+    } else if (selectedProjectName === "Monday") {
       if (!selectedTodo) {
-        setTomorrowCount(tomorrowCount + 1);
+        setMondayCount(mondayCount + 1);
       }
-    } else if (selectedProjectName === "Weekly") {
+    } else if (selectedProjectName === "Tuesday") {
       if (!selectedTodo) {
-        setThisWeekCount(thisWeekCount + 1);
+        setTuesdaysCount(tuesdayCount + 1);
       }
     }
 
@@ -174,9 +176,8 @@ export default function FormDialog() {
       selectedProjectName.slice(1);
 
     if (
-      ["Inbox", "Today", "Tomorrow", "Weekly"].includes(selectedProjectName)
+      ["Inbox", "Sunday", "Monday", "Tuesday"].includes(selectedProjectName)
     ) {
-      console.dir(convertedName, { depth: null });
       navigate(`/display/${convertedName}`);
     } else {
       navigate("/display/project");
@@ -188,7 +189,6 @@ export default function FormDialog() {
 
   return (
     <React.Fragment>
-    
       <Dialog open={open} onClose={handleClose} role="dialog" aria-modal="true">
         <DialogTitle>
           {selectedTodo ? "Edit Task" : "Add a New Task"}
@@ -245,13 +245,11 @@ export default function FormDialog() {
               onChange={handleChange}
             >
               {Array.isArray(projects) &&
-                projects
-                  .filter((project) => project)
-                  .map((project, index) => (
-                    <MenuItem key={index} value={project.name}>
-                      {project.name}
-                    </MenuItem>
-                  ))}
+                projects.map((project, index) => (
+                  <MenuItem key={index} value={project.name}>
+                    {project.name}
+                  </MenuItem>
+                ))}
             </Select>
           </FormControl>
 

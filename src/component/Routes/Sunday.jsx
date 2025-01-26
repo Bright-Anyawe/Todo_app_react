@@ -36,7 +36,7 @@ export function Sunday() {
     if (storedProjects && storedProjects.length) {
       setProjects(storedProjects);
       const sundayTodos =
-        storedProjects.find((project) => project?.name === "Today")?.todos ||
+        storedProjects.find((project) => project?.name === "Sunday")?.todos ||
         [];
       const sundayCount = Array.isArray(sundayTodos) ? sundayTodos.length : 0;
       setSundayCount(sundayCount);
@@ -57,7 +57,7 @@ export function Sunday() {
 
     setProjects((prevProjects) => {
       const updatedProjects = prevProjects.map((project) => {
-        if (project.name === "Today") {
+        if (project.name === "Sunday") {
           return { ...project, todos: updatedToDos };
         }
         return project;
@@ -93,7 +93,7 @@ export function Sunday() {
 
     setProjects((prevProjects) => {
       const updatedProjects = prevProjects.map((project) => {
-        if (project.name === "Today") {
+        if (project.name === "Sunday") {
           return { ...project, todos: updatedTodos };
         }
         return project;

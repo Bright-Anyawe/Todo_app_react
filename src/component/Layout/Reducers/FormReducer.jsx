@@ -20,7 +20,7 @@ const formReducer = (state, action) => {
         description: "",
         priority: "",
         date: new Date(),
-        projectName: ""
+        projectName: "",
       };
     }
 

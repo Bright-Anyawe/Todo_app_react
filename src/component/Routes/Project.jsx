@@ -9,26 +9,19 @@ import { useState } from "react";
 import { TodoDetails } from "./TodoDetails";
 import { FormButton } from "../Button";
 
-
 export default function Project() {
-
-  const {
-    setOpen,
-    getPriorityColor,
-    markTodoAsCompleted,
-  } = useContext(GeneralContext);
+  const { setOpen, getPriorityColor, markTodoAsCompleted } =
+    useContext(GeneralContext);
 
   const {
     projects = [],
     setProjects,
     selectedProjectName,
-    setSelectedTodo
+    setSelectedTodo,
   } = useContext(ProjectContext);
   const [showOptions, setShowOptions] = useState(null);
   const [detailsOpen, setDetailsOpen] = useState(false);
   const [todoDetails, setTodoDetails] = useState(null);
-
-
 
   const project = projects.find(
     (proj) =>
@@ -82,7 +75,6 @@ export default function Project() {
       })
     );
   };
-
 
   return (
     <div className="inboxTaskContainer">
