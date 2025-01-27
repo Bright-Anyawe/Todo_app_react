@@ -9,15 +9,14 @@ import {
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/ContextProvider";
 import PersonIcon from "@mui/icons-material/Person";
-import { useMediaQuery } from "@mui/material";
-import { useTheme } from "@mui/material/styles";
+
 import { useContext, useState } from "react";
 import { signOut } from "firebase/auth";
 import { auth } from "../../FireBase/FireBase";
 import { ProjectContext } from "../../Context/ContextProvider";
 
-const AuthIcon = () => {
-  const { user, setUser,setIsAuthenticated } = useContext(AuthContext);
+const AuthIcon = ({ className }) => {
+  const { user, setUser, setIsAuthenticated } = useContext(AuthContext);
   const { projects } = useContext(ProjectContext);
   const navigate = useNavigate();
 
@@ -26,8 +25,6 @@ const AuthIcon = () => {
   const [snackbarMessage, setSnackbarMessage] = useState("");
 
   const isMenuOpen = Boolean(anchorEl);
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("sm")); 
 
   const handleMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -62,72 +59,39 @@ const AuthIcon = () => {
 
   return (
     <>
-      {/* Conditionally render AuthIcon in Sidebar or Header */}
-      {isMobile ? (
-        // Render in Sidebar for mobile
-        <div style={{ position: "absolute", top: "20px", right: "10px" }}>
-          <IconButton aria-label="User Menu" onClick={handleMenuOpen}>
-            {user && user.photoURL ? (
-              <Avatar
-                src={user.photoURL}
-                alt={user.displayName || "User Icon"}
-                sx={{ width: 40, height: 40 }}
-              />
-            ) : (
-              <Avatar sx={{ width: 40, height: 40 }}>
-                <PersonIcon />
-              </Avatar>
-            )}
-          </IconButton>
+      <div
+        style={{ position: "absolute", top: "20px", right: "10px" }}
+        className={`relative ${className}`}
+      >
+        <IconButton aria-label="User Menu" onClick={handleMenuOpen}>
+          {user && user.photoURL ? (
+            <Avatar
+              src={user.photoURL}
+              alt={user.displayName || "User Icon"}
+              sx={{ width: 40, height: 40 }}
+            />
+          ) : (
+            <Avatar sx={{ width: 40, height: 40 }}>
+              <PersonIcon />
+            </Avatar>
+          )}
+        </IconButton>
 
-          <Menu
-            anchorEl={anchorEl}
-            open={isMenuOpen}
-            onClose={handleMenuClose}
-            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-            transformOrigin={{ vertical: "top", horizontal: "right" }}
-          >
-            {!user ? (
-              <MenuItem onClick={handleLogin}>Login</MenuItem>
-            ) : (
-              <MenuItem onClick={handleLogout}>Logout</MenuItem>
-            )}
-          </Menu>
-        </div>
-      ) : (
-        // Render in Header for desktop
-        <div style={{ position: "absolute", top: "20px", right: "10px" }}>
-          <IconButton aria-label="User Menu" onClick={handleMenuOpen}>
-            {user && user.photoURL ? (
-              <Avatar
-                src={user.photoURL}
-                alt={user.displayName || "User Icon"}
-                sx={{ width: 40, height: 40 }}
-              />
-            ) : (
-              <Avatar sx={{ width: 40, height: 40 }}>
-                <PersonIcon />
-              </Avatar>
-            )}
-          </IconButton>
+        <Menu
+          anchorEl={anchorEl}
+          open={isMenuOpen}
+          onClose={handleMenuClose}
+          anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
+          transformOrigin={{ vertical: "top", horizontal: "right" }}
+        >
+          {!user ? (
+            <MenuItem onClick={handleLogin}>Login</MenuItem>
+          ) : (
+            <MenuItem onClick={handleLogout}>Logout</MenuItem>
+          )}
+        </Menu>
+      </div>
 
-          <Menu
-            anchorEl={anchorEl}
-            open={isMenuOpen}
-            onClose={handleMenuClose}
-            anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-            transformOrigin={{ vertical: "top", horizontal: "right" }}
-          >
-            {!user ? (
-              <MenuItem onClick={handleLogin}>Login</MenuItem>
-            ) : (
-              <MenuItem onClick={handleLogout}>Logout</MenuItem>
-            )}
-          </Menu>
-        </div>
-      )}
-
-      {/* Snackbar for notifications */}
       <Snackbar
         open={snackbarOpen}
         autoHideDuration={3000}

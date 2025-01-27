@@ -4,34 +4,6 @@ import PropTypes from "prop-types";
 import AuthIcon from "./AuthIcon";
 
 const Header = ({ toggleSidebar, isCollapsed, arrowRef }) => {
-  // const { user, setUser } = useContext(AuthContext);
-
-  // const isMenuOpen = Boolean(anchorEl);
-
-  // const handleMenuOpen = (event) => {
-  //   setAnchorEl(event.currentTarget);
-  // };
-
-  // const handleMenuClose = () => {
-  //   setAnchorEl(null);
-  // };
-
-  // const handleLogin = () => {
-  //   setAnchorEl(null); // Close the menu
-  //   navigate("/login"); // Navigate to login page
-  // };
-
-  // const handleLogout = () => {
-  //   setUser(null); // Clear user authentication
-  //   setAnchorEl(null); // Close the menu
-  //   setSnackbarMessage("Successfully logged out!");
-  //   setSnackbarOpen(true); // Show snackbar
-  // };
-
-  // const handleSnackbarClose = () => {
-  //   setSnackbarOpen(false);
-  // };
-
   return (
     <>
       <header data-testid="header">
@@ -42,25 +14,30 @@ const Header = ({ toggleSidebar, isCollapsed, arrowRef }) => {
         </div>
 
         <div className="rightContainer">
-          <AuthIcon />
+          {/* Sidebar Toggle */}
+          <div
+            className="arrowLeftContainer"
+            style={{ position: "absolute", top: "20px", right: "70px" }}
+          >
+            <svg
+              ref={arrowRef}
+              style={{
+                transform: !isCollapsed ? "rotate(-180deg)" : "",
+                transition: "transform 0.5s ease-in-out",
+              }}
+              className="arrow left"
+              onClick={toggleSidebar}
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+            >
+              <title>arrow-left</title>
+              <path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z" />
+            </svg>
+          </div>
+ 
+          <AuthIcon className="hidden md:block"/>
         </div>
       </header>
-
-      {/* Snackbar for notifications */}
-      {/* <Snackbar
-        open={snackbarOpen}
-        autoHideDuration={3000}
-        onClose={handleSnackbarClose}
-        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
-      >
-        <Alert
-          onClose={handleSnackbarClose}
-          severity="success"
-          sx={{ width: "100%" }}
-        >
-          {snackbarMessage}
-        </Alert>
-      </Snackbar> */}
     </>
   );
 };

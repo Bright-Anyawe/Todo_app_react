@@ -6,9 +6,11 @@ import { useNavigate } from "react-router-dom";
 import { IconButton, Menu, MenuItem } from "@mui/material";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 import { useState, useRef, useEffect } from "react";
+import AuthIcon from "./AuthIcon";
 
 const SideBar = () => {
   const sidebarRef = useRef(null);
+ 
 
   const {
     inboxCount,
@@ -226,6 +228,10 @@ const SideBar = () => {
             </Menu>
           </div>{" "}
         </div>
+
+        <div className="mt-4 pt-4 border-t border-gray-300">
+        {/* <AuthIcon /> */}
+      </div>
       </aside>
     </>
   );
