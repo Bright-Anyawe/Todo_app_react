@@ -60,7 +60,7 @@ const AuthIcon = ({ className }) => {
   return (
     <>
       <div
-        style={{ position: "absolute", top: "20px", right: "10px" }}
+        style={{ position: "absolute", top: "20px", right: "51px" }}
         className={`relative ${className}`}
       >
         <IconButton aria-label="User Menu" onClick={handleMenuOpen}>

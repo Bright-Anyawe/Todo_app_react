@@ -112,7 +112,12 @@ const SideBar = () => {
         data-testid="sidebar"
       >
         <nav className="listContainer">
+          
           <ul id="menu">
+          <div className="block md:hidden relative mb-20 top-0 right-10">
+        <AuthIcon />
+      </div>
+
             {/* <li className="inbox-container"> */}
             <NavLink
               to="display/inbox"
@@ -182,6 +187,7 @@ const SideBar = () => {
           </ul>
         </nav>
 
+
         <div id="projectsContainer">
           <div className="addProjectContainer">
             <svg
@@ -226,12 +232,12 @@ const SideBar = () => {
               <MenuItem onClick={handleEditProject}>Edit</MenuItem>
               <MenuItem onClick={handleDeleteProject}>Delete</MenuItem>
             </Menu>
+
+            
           </div>{" "}
         </div>
 
-        <div className="mt-4 pt-4 border-t border-gray-300">
-        {/* <AuthIcon /> */}
-      </div>
+        
       </aside>
     </>
   );
