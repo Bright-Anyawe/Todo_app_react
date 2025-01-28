@@ -86,7 +86,6 @@ function Dashboard() {
     if (localProjects) {
       const userDoc = doc(db, "users", userId);
       await setDoc(userDoc, { projects: localProjects }, { merge: true });
-      localStorage.removeItem("projects");
     }
   };
 

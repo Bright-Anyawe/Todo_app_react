@@ -145,15 +145,15 @@ export default function FormDialog() {
       if (user) {
         const userDoc = doc(db, "users", user.uid);
         setDoc(userDoc, { projects: updatedProjects }, { merge: true });
-      } else {
+        console.log(updatedProjects);
         localStorage.setItem("projects", JSON.stringify(updatedProjects));
-      }
+      } 
+      localStorage.setItem("projects", JSON.stringify(updatedProjects));
 
       return updatedProjects;
     });
 
     if (selectedProjectName === "Inbox") {
-      console.log(selectedProjectName);
       if (!selectedTodo) {
         setInboxCount(inboxCount + 1);
       }

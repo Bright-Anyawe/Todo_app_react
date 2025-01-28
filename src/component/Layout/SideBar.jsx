@@ -10,7 +10,6 @@ import AuthIcon from "./AuthIcon";
 
 const SideBar = () => {
   const sidebarRef = useRef(null);
- 
 
   const {
     inboxCount,
@@ -112,13 +111,11 @@ const SideBar = () => {
         data-testid="sidebar"
       >
         <nav className="listContainer">
-          
           <ul id="menu">
-          <div className="block md:hidden relative mb-20 top-0 right-10">
-        <AuthIcon />
-      </div>
+            <div className="block md:hidden relative mb-20 top-0 right-10">
+              <AuthIcon />
+            </div>
 
-            {/* <li className="inbox-container"> */}
             <NavLink
               to="display/inbox"
               className="navLink"
@@ -131,8 +128,6 @@ const SideBar = () => {
               Inbox
               <span>{inboxCount}</span>
             </NavLink>
-
-            {/* </li> */}
 
             <NavLink
               to="display/sunday"
@@ -187,7 +182,6 @@ const SideBar = () => {
           </ul>
         </nav>
 
-
         <div id="projectsContainer">
           <div className="addProjectContainer">
             <svg
@@ -232,12 +226,8 @@ const SideBar = () => {
               <MenuItem onClick={handleEditProject}>Edit</MenuItem>
               <MenuItem onClick={handleDeleteProject}>Delete</MenuItem>
             </Menu>
-
-            
           </div>{" "}
         </div>
-
-        
       </aside>
     </>
   );
