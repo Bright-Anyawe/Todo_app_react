@@ -147,7 +147,7 @@ export default function FormDialog() {
         setDoc(userDoc, { projects: updatedProjects }, { merge: true });
         console.log(updatedProjects);
         localStorage.setItem("projects", JSON.stringify(updatedProjects));
-      } 
+      }
       localStorage.setItem("projects", JSON.stringify(updatedProjects));
 
       return updatedProjects;
@@ -171,16 +171,16 @@ export default function FormDialog() {
       }
     }
 
-    const convertedName =
-      selectedProjectName.charAt(0).toLowerCase() +
-      selectedProjectName.slice(1);
-
+    const convertedName = selectedProjectName.toLowerCase();
     if (
-      ["Inbox", "Sunday", "Monday", "Tuesday"].includes(selectedProjectName)
+      ["inbox", "sunday", "monday", "tuesday"].includes(selectedProjectName)
     ) {
       navigate(`/display/${convertedName}`);
-    } else {
+    } else if (selectedProjectName === "Project") {
       navigate("/display/project");
+    } else {
+      console.error(`Unknown project name: ${selectedProjectName}`);
+      navigate("/display/inbox"); // Default to Inbox if invalid
     }
 
     handleClose();
@@ -244,12 +244,15 @@ export default function FormDialog() {
               value={projectName}
               onChange={handleChange}
             >
-              {Array.isArray(projects) &&
+              {Array.isArray(projects) && projects.length > 0 ? (
                 projects.map((project, index) => (
                   <MenuItem key={index} value={project.name}>
                     {project.name}
                   </MenuItem>
-                ))}
+                ))
+              ) : (
+                <MenuItem value="Inbox">Inbox</MenuItem>
+              )}
             </Select>
           </FormControl>
 
