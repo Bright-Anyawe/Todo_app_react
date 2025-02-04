@@ -38,7 +38,7 @@ export default function FormDialog() {
     mondayCount,
     setMondayCount,
     tuesdayCount,
-    setTuesdaysCount,
+    setTuesdayCount,
     selectedTodo,
   } = useContext(GeneralContext);
   const { projects, setProjects, setSelectedProjectName, selectedProjectName } =
@@ -167,13 +167,13 @@ export default function FormDialog() {
       }
     } else if (selectedProjectName === "Tuesday") {
       if (!selectedTodo) {
-        setTuesdaysCount(tuesdayCount + 1);
+        setTuesdayCount(tuesdayCount + 1);
       }
     }
 
     const convertedName = selectedProjectName.toLowerCase();
     if (
-      ["inbox", "sunday", "monday", "tuesday"].includes(selectedProjectName)
+      ["Inbox", "Sunday", "Monday", "Tuesday"].includes(selectedProjectName)
     ) {
       navigate(`/display/${convertedName}`);
     } else if (selectedProjectName === "Project") {
