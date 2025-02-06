@@ -93,11 +93,8 @@ export default function FormDialog() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    console.log(state);
-
     dispatch({
       type: "Update_form_inputs",
-
       fieldName: name,
       fieldValue: value,
     });
@@ -121,7 +118,7 @@ export default function FormDialog() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const selectedProjectName = state.projectName || "Inbox";
@@ -129,29 +126,31 @@ export default function FormDialog() {
 
     const newTodo = { ...state };
 
-    setProjects((prevProjects) => {
-      const updatedProjects = prevProjects.map((project) => {
-        if (project.name === selectedProjectName) {
-          const updatedTodos = selectedTodo
-            ? project.todos.map((todo) =>
-                todo === selectedTodo ? newTodo : todo
-              )
-            : [...project.todos, newTodo];
-          return { ...project, todos: updatedTodos };
-        }
-        return project;
-      });
-
-      if (user) {
-        const userDoc = doc(db, "users", user.uid);
-        setDoc(userDoc, { projects: updatedProjects }, { merge: true });
-        console.log(updatedProjects);
-        localStorage.setItem("projects", JSON.stringify(updatedProjects));
+    const updatedProjects = projects.map((project) => {
+      if (project.name === selectedProjectName) {
+        const updatedTodos = selectedTodo
+          ? project.todos.map((todo) =>
+              todo === selectedTodo ? newTodo : todo
+            )
+          : [...project.todos, newTodo];
+        return { ...project, todos: updatedTodos };
       }
-      localStorage.setItem("projects", JSON.stringify(updatedProjects));
-
-      return updatedProjects;
+      return project;
     });
+
+    // Update Firestore
+    if (user) {
+      const userDoc = doc(db, "users", user.uid);
+      try {
+        await setDoc(userDoc, { projects: updatedProjects }, { merge: true });
+        console.log("Projects updated successfully");
+      } catch (error) {
+        console.error("Error updating Firestore:", error);
+      }
+    }
+
+    setProjects(updatedProjects);
+    localStorage.setItem("projects", JSON.stringify(updatedProjects));
 
     if (selectedProjectName === "Inbox") {
       if (!selectedTodo) {
@@ -180,7 +179,7 @@ export default function FormDialog() {
       navigate("/display/project");
     } else {
       console.error(`Unknown project name: ${selectedProjectName}`);
-      navigate("/display/inbox"); // Default to Inbox if invalid
+      navigate("/display/inbox");
     }
 
     handleClose();
@@ -230,7 +229,6 @@ export default function FormDialog() {
               <MenuItem value="important" style={{ color: "orange" }}>
                 Important
               </MenuItem>
-
               <MenuItem value="urgent" style={{ color: "red" }}>
                 Urgent
               </MenuItem>

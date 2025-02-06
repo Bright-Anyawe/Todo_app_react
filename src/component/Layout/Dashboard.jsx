@@ -92,6 +92,8 @@ function Dashboard() {
   const fetchFirestoreProjects = async (userId) => {
     const userDoc = doc(db, "users", userId);
     const userSnap = await getDoc(userDoc);
+    console.log("Projects from Firestore:", userSnap.data().projects);
+
     if (userSnap.exists()) {
       setProjects(userSnap.data().projects || []);
     } else {
@@ -225,7 +227,7 @@ function Dashboard() {
               />
               <SideBar />
               <Display />
-              {/* <Login /> */}
+              {}
             </AuthContext.Provider>
           </ProjectContext.Provider>
         </GeneralContext.Provider>
