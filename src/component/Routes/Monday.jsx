@@ -7,7 +7,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import InfoIcon from "@mui/icons-material/Info";
 import { useState, useEffect } from "react";
 import { TodoDetails } from "./TodoDetails";
-import { FormButton } from "../Button";
+import { FormButton } from "../shared";
 
 export function Monday() {
   const {

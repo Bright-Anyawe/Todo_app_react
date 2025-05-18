@@ -1,7 +1,8 @@
-import FormDialog from "./PopUp/Dialog";
+import FormDialog from "../PopUp/Dialog";
 import { useState } from "react";
 import { useContext } from "react";
-import { GeneralContext } from "../Context/ContextProvider";
+import { GeneralContext } from "../../Context/ContextProvider";
+
 export const FormButton = () => {
   const { open, setOpen } = useContext(GeneralContext);
   const [isClicked, setIsClicked] = useState(false);
@@ -30,9 +31,7 @@ export const FormButton = () => {
           Add task
         </button>
         <FormDialog />
-
-        {/* <Form/> */}
       </div>
     </>
   );
-};
+}; 

@@ -9,12 +9,13 @@ import { Sunday } from "./Sunday.jsx";
 import Login from "../../Auth/Login";
 import ErrorPage from "./ErrorPage.jsx";
 import { Navigate } from "react-router-dom";
+import DashboardHome from "../Pages/DashboardHome.jsx";
 // import { App } from "../../App";
 
 const routes = [
   {
     path: "/",
-    element: <Navigate to="/display/inbox" replace />,
+    element: <Navigate to="/dashboard" replace />,
   },
   {
     path: "/",
@@ -23,12 +24,15 @@ const routes = [
 
     children: [
       {
+        path: "dashboard",
+        element: <DashboardHome />,
+      },
+      {
         path: "display",
         element: <Display />,
         children: [
           { index: true, element: <Navigate to="inbox" replace /> },
           { path: "inbox", element: <Inbox /> },
-
           { path: "sunday", element: <Sunday /> },
           { path: "monday", element: <Monday /> },
           { path: "tuesday", element: <Tuesday /> },

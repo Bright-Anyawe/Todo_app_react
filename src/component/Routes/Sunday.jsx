@@ -6,7 +6,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import InfoIcon from "@mui/icons-material/Info";
 import { useState } from "react";
-import { FormButton } from "../Button";
+import { FormButton } from "../shared";
 import { TodoDetails } from "./TodoDetails";
 import { useEffect } from "react";
 

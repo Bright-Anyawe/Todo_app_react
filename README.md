@@ -1,5 +1,62 @@
 # Todo App
 
+A modern Todo application built with React, Firebase, and Material UI.
+
+## Features
+
+- Dashboard overview of all your tasks
+- Task management with various priority levels
+- Daily task organization (Inbox, Sunday, Monday, Tuesday)
+- Project-based task organization
+- Completed tasks tracking
+- User authentication
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js (v14.0.0 or later)
+- npm or yarn
+
+### Installation
+
+1. Clone the repository
+2. Install dependencies:
+
+```bash
+npm install
+```
+
+3. Start the development server:
+
+```bash
+npm run dev
+```
+
+## Project Structure
+
+The project has been organized with a clean, maintainable structure:
+
+- `src/component/Pages`: Page-level components
+- `src/component/Layout`: Layout components (Header, Sidebar, etc.)
+- `src/component/Routes`: Route-specific components
+- `src/component/shared`: Shared UI components
+- `src/Context`: Context providers
+- `src/Auth`: Authentication components
+- `src/FireBase`: Firebase configuration
+- `src/styles`: CSS stylesheets
+
+## Optimization
+
+The project has been optimized in several ways:
+
+1. Component organization by feature/responsibility
+2. Shared components for reusability
+3. Context API for state management
+4. Firebase integration for data persistence
+5. Responsive design with Material UI
+6. Clear separation of concerns with modular architecture
+
 ## Description 
 The App enable user to create project, add, edit and delete todos from the todo's respective project
 ## Table of Contents

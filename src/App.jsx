@@ -1,12 +1,13 @@
+import { StrictMode } from "react";
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
+import routes from "./component/Routes/RouteLayout";
 
-import Login from "./Auth/Login";
+const router = createBrowserRouter(routes);
 
 export const App = () => {
   return (
-    <>
-      <div>
-        <Login />
-      </div>
-    </>
+    <StrictMode>
+      <RouterProvider router={router} />
+    </StrictMode>
   );
 };
