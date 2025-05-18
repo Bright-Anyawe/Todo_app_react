@@ -35,12 +35,12 @@
     transition: transform 0.3s ease-in-out;
   }
 
-  div#displayContentContainer {
+  div#mainContentContainer {
     display: flex;
     flex-direction: column;
   }
 
-  div.displayContentSubContainer {
+  div.mainContentSubContainer {
     padding: 0;
   }
 
@@ -191,12 +191,12 @@
     transition: transform 0.3s ease-in-out;
   }
 
-  div#displayContentContainer {
+  div#mainContentContainer {
     display: flex;
     flex-direction: column;
   }
 
-  div.displayContentSubContainer {
+  div.mainContentSubContainer {
     padding: 0;
   }
 
@@ -340,8 +340,7 @@ div.taskContent {
 }
 
 .subHeadContainer svg {
-  fill: var(--svg-dominion-color);
-  width: 39px;
+  fill: white;
 }
 
 #displayContentContainer {
@@ -361,4 +360,25 @@ div.taskContent {
     display: flex;
     
 }
+}
+
+.subHeadContainer svg {
+  fill: white;
+}
+
+#mainContentContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 80%;
+  margin: 0 auto;
+}
+
+.mainContentSubContainer {
+  padding: 20px 0;
+  width: 100%;
+}
+
+#taskBtnContainer {
+  padding: 15px;
 }

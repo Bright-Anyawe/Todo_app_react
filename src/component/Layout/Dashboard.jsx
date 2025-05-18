@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Header from "./Header";
 import SideBar from "./SideBar";
-import Display from "./Display";
+import MainContent from "./MainContent";
 import { useEffect, useRef } from "react";
 import { AuthContext } from "../../Context/ContextProvider";
 import { GeneralContext, ProjectContext } from "../../Context/ContextProvider";
@@ -226,7 +226,7 @@ function Dashboard() {
                 arrowRef={arrowRef}
               />
               <SideBar />
-              <Display />
+              <MainContent />
               {}
             </AuthContext.Provider>
           </ProjectContext.Provider>
