@@ -19,12 +19,15 @@ function Dashboard() {
 
   const [open, setOpen] = useState(false);
   const [OpenProjectForm, setOpenProjectForm] = useState(false);
-  const [projects, setProjects] = useState([
-    { name: "Inbox", todos: [] },
-    { name: "Sunday", todos: [] },
-    { name: "Monday", todos: [] },
-    { name: "Tuesday", todos: [] },
-  ]);
+  const [projects, setProjects] = useState(() => {
+    const localProjects = JSON.parse(localStorage.getItem("projects"));
+    return localProjects && localProjects.length > 0 ? localProjects : [
+      { name: "Inbox", todos: [] },
+      { name: "Sunday", todos: [] },
+      { name: "Monday", todos: [] },
+      { name: "Tuesday", todos: [] },
+    ];
+  });
   const [projectName, setProjectName] = useState("");
   const [selectedProjectName, setSelectedProjectName] = useState("");
   const [selectedProjectIndex, setSelectedProjectIndex] = useState(null);
@@ -97,12 +100,8 @@ function Dashboard() {
     if (userSnap.exists()) {
       setProjects(userSnap.data().projects || []);
     } else {
-      setProjects([
-        { name: "Inbox", todos: [] },
-        { name: "Sunday", todos: [] },
-        { name: "Monday", todos: [] },
-        { name: "Tuesday", todos: [] },
-      ]);
+      // If userSnap doesn't exist, rely on local projects already synced or initial defaults.
+      // Do not overwrite projects with an empty array here.
     }
   };
 
@@ -127,6 +126,7 @@ function Dashboard() {
       const saveProjects = async () => {
         const userDoc = doc(db, "users", user.uid);
         await setDoc(userDoc, { projects }, { merge: true });
+        console.log("Projects in Dashboard (after save):", projects);
       };
       saveProjects();
     }
