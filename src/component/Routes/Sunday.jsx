@@ -31,18 +31,6 @@ export function Sunday() {
   const sundayTodos =
     projects.find((project) => project?.name === "Sunday")?.todos || [];
 
-  useEffect(() => {
-    const storedProjects = JSON.parse(localStorage.getItem("projects"));
-    if (storedProjects && storedProjects.length) {
-      setProjects(storedProjects);
-      const sundayTodos =
-        storedProjects.find((project) => project?.name === "Sunday")?.todos ||
-        [];
-      const sundayCount = Array.isArray(sundayTodos) ? sundayTodos.length : 0;
-      setSundayCount(sundayCount);
-    }
-  }, []);
-
   const handleOptionsClick = (index) => {
     setShowOptions(showOptions === index ? null : index);
   };
@@ -62,7 +50,6 @@ export function Sunday() {
         }
         return project;
       });
-      localStorage.setItem("projects", JSON.stringify(updatedProjects));
       setSundayCount(updatedToDos.length);
       return updatedProjects;
     });
@@ -98,16 +85,15 @@ export function Sunday() {
         }
         return project;
       });
-      localStorage.setItem("projects", JSON.stringify(updatedProjects));
+      setCompletedToDos((prevCompletedToDos) => [...prevCompletedToDos, todo]);
+
+      const completedCount = Array.isArray(completedToDos)
+        ? completedToDos.length
+        : 0;
+      setCompletedCount(completedCount);
+      setSnackbarOpen(true);
       return updatedProjects;
     });
-    setCompletedToDos((prevCompletedToDos) => [...prevCompletedToDos, todo]);
-
-    const completedCount = Array.isArray(completedToDos)
-      ? completedToDos.length
-      : 0;
-    setCompletedCount(completedCount);
-    setSnackbarOpen(true);
   };
 
   const handleCloseSnackbar = () => {

@@ -36,6 +36,11 @@ const routes = [
           { path: "sunday", element: <Sunday /> },
           { path: "monday", element: <Monday /> },
           { path: "tuesday", element: <Tuesday /> },
+          // Add missing days
+          { path: "wednesday", element: <Inbox projectName="Wednesday" /> },
+          { path: "thursday", element: <Inbox projectName="Thursday" /> },
+          { path: "friday", element: <Inbox projectName="Friday" /> },
+          { path: "saturday", element: <Inbox projectName="Saturday" /> },
           { path: "completed", element: <Completed /> },
           { path: "project", element: <Project /> },
         ],

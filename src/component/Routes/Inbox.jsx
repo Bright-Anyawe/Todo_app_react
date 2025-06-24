@@ -8,7 +8,6 @@ import InfoIcon from "@mui/icons-material/Info";
 import { useState } from "react";
 import { FormButton } from "../shared";
 import { TodoDetails } from "./TodoDetails";
-import { useEffect } from "react";
 // import { db, doc, setDoc  } from "../../FireBase/FireBase";
 
 
@@ -27,27 +26,10 @@ export function Inbox() {
   const [todoDetails, setTodoDetails] = useState(null);
   const [snackbarOpen, setSnackbarOpen] = useState(false);
 
-  // useEffect(() => {
-  //   const storedProjects = JSON.parse(localStorage.getItem("projects"));
-  //   if (storedProjects && storedProjects.length) {
-  //     setProjects(storedProjects);
-  //   }
-  // }, []);
-  
-
   let inboxToDos =
     projects.find((project) => project?.name === "Inbox")?.todos || [];
 
-  useEffect(() => {  
-    const storedProjects = JSON.parse(localStorage.getItem("projects"));
-    if (storedProjects && storedProjects.length) {
-      setProjects(storedProjects);
-      const inboxTodos =
-        storedProjects.find((project) => project?.name === "Inbox")?.todos ||
-        [];
-      setInboxCount(inboxTodos.length);
-    }
-  }, []);
+  console.log("Inbox ToDos being rendered:", inboxToDos);
 
   const handleOptionsClick = (index) => {
     setShowOptions(showOptions === index ? null : index);
@@ -68,7 +50,6 @@ export function Inbox() {
         }
         return project;
       });
-      localStorage.setItem("projects", JSON.stringify(updatedProjects));
       setInboxCount(updatedTodos.length);
       // updateFirestore(updatedProjects);
       return updatedProjects;
@@ -103,7 +84,8 @@ export function Inbox() {
         }
         return project;
       });
-      localStorage.setItem("projects", JSON.stringify(updatedProjects));
+      setInboxCount(updatedTodos.length);
+      // updateFirestore(updatedProjects);
       return updatedProjects;
     });
 

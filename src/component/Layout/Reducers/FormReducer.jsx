@@ -3,7 +3,7 @@ const initialState = {
   description: "yellow blanket",
   priority: "important",
   date: new Date(),
-  projectName: ""
+  projectName: "Inbox"
 };
 
 const formReducer = (state, action) => {

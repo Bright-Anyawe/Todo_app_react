@@ -23,6 +23,18 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../Context/ContextProvider";
 import { db, doc, setDoc } from "../../FireBase/FireBase";
 
+// List of default projects
+const defaultProjects = [
+  "Inbox",
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
+
 export default function FormDialog() {
   const navigate = useNavigate();
   const { user } = useContext(AuthContext);
@@ -76,15 +88,17 @@ export default function FormDialog() {
     }
   }, [selectedTodo]);
 
+  // Only set projectName from selectedProjectName when dialog opens
   useEffect(() => {
-    if (selectedProjectName) {
+    if (open && selectedProjectName) {
       dispatch({
         type: "Update_form_inputs",
         fieldName: "projectName",
         fieldValue: selectedProjectName,
       });
     }
-  }, [selectedProjectName]);
+    // eslint-disable-next-line
+  }, [open]);
 
   const handleClose = () => {
     document.getElementById("root").removeAttribute("inert");
@@ -126,8 +140,11 @@ export default function FormDialog() {
 
     const newTodo = { ...state };
 
-    const updatedProjects = projects.map((project) => {
+    // Ensure the selected project exists in projects, if not, create it
+    let projectExists = false;
+    let updatedProjects = projects.map((project) => {
       if (project.name === selectedProjectName) {
+        projectExists = true;
         const updatedTodos = selectedTodo
           ? project.todos.map((todo) =>
               todo === selectedTodo ? newTodo : todo
@@ -136,6 +153,21 @@ export default function FormDialog() {
         return { ...project, todos: updatedTodos };
       }
       return project;
+    });
+
+    // If project does not exist, add it (with the new todo)
+    if (!projectExists) {
+      updatedProjects = [
+        ...updatedProjects,
+        { name: selectedProjectName, todos: [newTodo] },
+      ];
+    }
+
+    // Also ensure all default projects exist (with empty todos if missing)
+    defaultProjects.forEach((name) => {
+      if (!updatedProjects.some((p) => p.name === name)) {
+        updatedProjects.push({ name, todos: [] });
+      }
     });
 
     // Update Firestore
@@ -154,26 +186,32 @@ export default function FormDialog() {
 
     if (selectedProjectName === "Inbox") {
       if (!selectedTodo) {
-        setInboxCount(inboxCount + 1);
+        setInboxCount(
+          updatedProjects.find((p) => p.name === "Inbox").todos.length
+        );
       }
     } else if (selectedProjectName === "Sunday") {
       if (!selectedTodo) {
-        setSundayCount(sundayCount + 1);
+        setSundayCount(
+          updatedProjects.find((p) => p.name === "Sunday").todos.length
+        );
       }
     } else if (selectedProjectName === "Monday") {
       if (!selectedTodo) {
-        setMondayCount(mondayCount + 1);
+        setMondayCount(
+          updatedProjects.find((p) => p.name === "Monday").todos.length
+        );
       }
     } else if (selectedProjectName === "Tuesday") {
       if (!selectedTodo) {
-        setTuesdayCount(tuesdayCount + 1);
+        setTuesdayCount(
+          updatedProjects.find((p) => p.name === "Tuesday").todos.length
+        );
       }
     }
 
     const convertedName = selectedProjectName.toLowerCase();
-    if (
-      ["Inbox", "Sunday", "Monday", "Tuesday"].includes(selectedProjectName)
-    ) {
+    if (defaultProjects.includes(selectedProjectName)) {
       navigate(`/display/${convertedName}`);
     } else if (selectedProjectName === "Project") {
       navigate("/display/project");
@@ -239,18 +277,22 @@ export default function FormDialog() {
             <InputLabel>Select project</InputLabel>
             <Select
               name="projectName"
-              value={projectName}
+              value={projectName || "Inbox"}
               onChange={handleChange}
             >
-              {Array.isArray(projects) && projects.length > 0 ? (
-                projects.map((project, index) => (
-                  <MenuItem key={index} value={project.name}>
+              {defaultProjects.map((name) => (
+                <MenuItem key={name} value={name}>
+                  {name}
+                </MenuItem>
+              ))}
+              {/* Also show any custom projects not in defaultProjects */}
+              {projects
+                .filter((p) => !defaultProjects.includes(p.name))
+                .map((project, index) => (
+                  <MenuItem key={project.name} value={project.name}>
                     {project.name}
                   </MenuItem>
-                ))
-              ) : (
-                <MenuItem value="Inbox">Inbox</MenuItem>
-              )}
+                ))}
             </Select>
           </FormControl>
 

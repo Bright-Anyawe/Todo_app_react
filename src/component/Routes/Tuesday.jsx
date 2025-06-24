@@ -43,27 +43,29 @@ export function Tuesday() {
   //   }
   // }, []);
 
-  useEffect(() => {
-    const storedProjects = JSON.parse(localStorage.getItem("projects"));
-    if (storedProjects && storedProjects.length) {
-      const updatedProjects = storedProjects.map((project) => {
-        if (project.name === "Tuesday") {
-          project.todos = project.todos.map((todo) => ({
-            ...todo,
-            completed: todo.completed ?? false,
-          }));
-        }
-        return project;
-      });
-      setProjects(updatedProjects);
-      localStorage.setItem("projects", JSON.stringify(updatedProjects));
+  // Removed the useEffect block that loads and overwrites projects from localStorage.
+  // This ensures the component always uses the up-to-date projects state from context.
+  // useEffect(() => {
+  //   const storedProjects = JSON.parse(localStorage.getItem("projects"));
+  //   if (storedProjects && storedProjects.length) {
+  //     const updatedProjects = storedProjects.map((project) => {
+  //       if (project.name === "Tuesday") {
+  //         project.todos = project.todos.map((todo) => ({
+  //           ...todo,
+  //           completed: todo.completed ?? false,
+  //         }));
+  //       }
+  //       return project;
+  //     });
+  //     setProjects(updatedProjects);
+  //     localStorage.setItem("projects", JSON.stringify(updatedProjects));
 
-      const tuesdayCount =
-        updatedProjects.find((project) => project?.name === "Tuesday")?.todos ||
-        [];
-      setTuesdayCount(tuesdayCount.length);
-    }
-  }, []);
+  //     const tuesdayCount =
+  //       updatedProjects.find((project) => project?.name === "Tuesday")?.todos ||
+  //       [];
+  //     setTuesdayCount(tuesdayCount.length);
+  //   }
+  // }, []);
 
   const handleOptionsClick = (index) => {
     setShowOptions(showOptions === index ? null : index);
@@ -84,8 +86,6 @@ export function Tuesday() {
         }
         return project;
       });
-      localStorage.setItem("projects", JSON.stringify(updatedProjects));
-
       setTuesdayCount(updatedToDos.length);
       return updatedProjects;
     });
@@ -117,12 +117,11 @@ export function Tuesday() {
         }
         return project;
       });
-      localStorage.setItem("projects", JSON.stringify(updatedProjects));
+      setCompletedToDos((prevCompletedToDos) => [...prevCompletedToDos, todo]);
+
+      setSnackbarOpen(true);
       return updatedProjects;
     });
-    setCompletedToDos((prevCompletedToDos) => [...prevCompletedToDos, todo]);
-
-    setSnackbarOpen(true);
   };
 
   const handleCloseSnackbar = () => {

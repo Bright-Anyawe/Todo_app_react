@@ -28,28 +28,6 @@ export function Monday() {
   const mondayToDos =
     projects.find((project) => project?.name === "Monday")?.todos || [];
 
-  useEffect(() => {
-    const storedProjects = JSON.parse(localStorage.getItem("projects"));
-    if (storedProjects && storedProjects.length) {
-      const updatedProjects = storedProjects.map((project) => {
-        if (project.name === "Tomorrow") {
-          project.todos = project.todos.map((todo) => ({
-            ...todo,
-            completed: todo.completed ?? false,
-          }));
-        }
-        return project;
-      });
-      setProjects(updatedProjects);
-      localStorage.setItem("projects", JSON.stringify(updatedProjects));
-
-      const mondayToDos =
-        updatedProjects.find((project) => project?.name === "Monday")
-          ?.todos || [];
-          setMondayCount(mondayToDos.length);
-    }
-  }, []);
-
   const handleOptionsClick = (index) => {
     setShowOptions(showOptions === index ? null : index);
   };
@@ -69,8 +47,6 @@ export function Monday() {
         }
         return project;
       });
-      localStorage.setItem("projects", JSON.stringify(updatedProjects));
-      updatedToDos.length;
       return updatedProjects;
     });
   };
@@ -100,7 +76,6 @@ export function Monday() {
         }
         return project;
       });
-      localStorage.setItem("projects", JSON.stringify(updatedProjects));
       return updatedProjects;
     });
     setCompletedToDos((prevCompletedToDos) => [...prevCompletedToDos, todo]);

@@ -47,13 +47,6 @@ const SideBar = () => {
     navigate(`/display/project`);
   };
 
-  useEffect(() => {
-    const savedProjects = localStorage.getItem("projects");
-    if (savedProjects) {
-      setProjects(JSON.parse(savedProjects));
-    }
-  }, [setProjects]);
-
   const handleOptionsClick = (event, index) => {
     setAnchorEl(event.currentTarget);
     setSelectedProjectIndex(index);
